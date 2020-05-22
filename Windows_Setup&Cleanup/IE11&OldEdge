@@ -1,0 +1,39 @@
+#IE11
+
+#Set Search Provider to Google - must open IE11 after to confirm
+#must be run as non-admin to get correct username
+$user = [Environment]::UserName
+$regvalue = "{"+[Guid]::NewGuid().ToString().ToUpper()+"}"
+
+<#copy the icon from c:\users\$user\AppData\LocalLow\Microsoft\Internet Explorer\Services\ beforehand and put into DFS share from a system that has Google as search provider#>
+copy "\\trpcweb.com\sdata\technology\scripts\browser setup\googlesearch.ico" "c:\users\$user\AppData\LocalLow\Microsoft\Internet Explorer\Services\googlesearch.ico"
+
+#set regkeys
+New-Item -Path "HKCU:\Software\Microsoft\Internet Explorer\SearchScopes" -Name $regvalue –Force
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Internet Explorer\SearchScopes" -Name DefaultScope -Value $regvalue
+New-ItemProperty -Path "HKCU:\Software\Microsoft\Internet Explorer\SearchScopes\$regvalue" -Name DisplayName -Value Google -PropertyType String
+New-ItemProperty -Path "HKCU:\Software\Microsoft\Internet Explorer\SearchScopes\$regvalue" -Name FaviconPath -Value "c:\users$user\AppData\LocalLow\Microsoft\Internet Explorer\Services\google_gpo.ico" -PropertyType String
+New-ItemProperty -Path "HKCU:\Software\Microsoft\Internet Explorer\SearchScopes\$regvalue" -Name FaviconURL -Value https://www.google.com/favicon.ico -PropertyType String
+New-ItemProperty -Path "HKCU:\Software\Microsoft\Internet Explorer\SearchScopes\$regvalue" -Name OSDFileURL -Value https://www.microsoft.com/en-us/IEGallery/GoogleAddOns -PropertyType String
+New-ItemProperty -Path "HKCU:\Software\Microsoft\Internet Explorer\SearchScopes\$regvalue" -Name ShowSearchSuggestions -Value 1 -PropertyType DWord
+New-ItemProperty -Path "HKCU:\Software\Microsoft\Internet Explorer\SearchScopes\$regvalue" -Name SuggestionsURL -Value "https://www.google.com/complete/search?q={searchTerms}&client=ie8&mw={ie:maxWidth}&sh={ie:sectionHeight}&rh={ie:rowHeight}&inputencoding={inputEncoding}&outputencoding={outputEncoding}" -PropertyType String
+New-ItemProperty -Path "HKCU:\Software\Microsoft\Internet Explorer\SearchScopes\$regvalue" -Name URL -Value "https://www.google.com/search?q={searchTerms}&sourceid=ie7&rls=com.microsoft:{language}:{referrer:source}&ie={inputEncoding?}&oe={outputEncoding?}" -PropertyType String
+
+#Set Home page to payroll.trpcweb.com
+$homepage = 'payroll.trpcweb.com'
+Set-Itemproperty -Path "HKCU:\Software\Microsoft\Internet Explorer\Main\" -Name "start page" -Value $homepage
+
+#Set New Tab to open a blank page
+Set-Itemproperty -Path "HKCU:\Software\Microsoft\Internet Explorer\TabbedBrowsing\" -Name "NewTabPageShow" -Value 0
+
+#Set to not warn on multiple tabs closing
+Set-Itemproperty -Path "HKCU:\Software\Microsoft\Internet Explorer\TabbedBrowsing\" -Name "WarnOnClose" -Value 0
+
+
+
+#Edge
+
+#set to not warn on multiple tabs closing
+Set-ItemProperty -path "HKCU:\Software\Classes\Local Settings\Software\Microsoft\Windows\CurrentVersion\AppContainer\Storage\microsoft.microsoftedge_8wekyb3d8bbwe\MicrosoftEdge\Main" -Name "AskToCloseAllTabs" -Value 0
+
+
