@@ -1,0 +1,5 @@
+$file = Get-Item "C:\Users\tnapier\downloads\log.log"
+$Now = Get-Date
+$days = 8
+$LastWrite = $Now.AddDays(-$days)
+$file.LastWriteTime = ($LastWrite)
