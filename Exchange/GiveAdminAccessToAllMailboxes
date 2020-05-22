@@ -1,0 +1,15 @@
+Add-PSSnapin Microsoft.Exchange.Management.PowerShell.SnapIn
+
+$admingroup = “trpcweb\ksullivan","trpcweb\tnapier","trpcweb\raverma"
+
+$mailboxes = Get-Mailbox -Resultsize unlimited
+
+foreach ($mailbox in $mailboxes) {
+
+foreach ($admin in $admingroup) {
+
+Add-MailboxPermission -Identity $mailbox -User $admin -AccessRights FullAccess -InheritanceType All -Automapping $false
+
+}
+
+}
