@@ -1,0 +1,21 @@
+#Chrome
+
+#variables
+$regKeysetup = "HKLM:\SOFTWARE\Policies\Google\Chrome"
+$regKeyhome = "HKLM:\SOFTWARE\Policies\Google\Chrome\RestoreOnStartupURLs"
+$url = "payroll.trpcweb.com"
+
+#create keys
+#show home button
+New-ItemProperty -path $regKeysetup -Name ShowHomeButton -PropertyType DWord -Value 1
+#open specific page on startup - user is unable to change
+#New-ItemProperty -path $regKeysetup -Name RestoreOnStartup -PropertyType Dword -Value 4
+#homepage
+New-ItemProperty -path $regKeysetup -Name HomepageLocation -PropertyType String -Value $url
+#home button goes to homepage
+New-ItemProperty -path $regKeysetup -Name HomepageIsNewTabPage -PropertyType Dword -Value 0
+
+#page(s) to open on startup - user is unable to change
+#For more then one page create another new-item and set-item line with the name -2 and the new url
+#New-Item -path HKLM:\SOFTWARE\Policies\Google\Chrome\RestoreOnStartupURLs
+#New-ItemProperty -path $regKeyhome -Name 1 -PropertyType String -Value $url
