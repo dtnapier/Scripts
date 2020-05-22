@@ -1,0 +1,1 @@
+Rename-item -path "C:\Program Files\Microsoft\Exchange Server\V15\Logging\LogClear.log" -newname ("LogClear" + $datetime + ".log")
