@@ -1,0 +1,39 @@
+#Returns success or fail depending on if it sees the string in the whole website string
+
+$webClient = new-object System.Net.WebClient
+$webClient.Headers.Add("user-agent", "PowerShell Script")
+
+
+while (1 -eq 1) {
+   $output = ""
+
+
+   $startTime = get-date
+   $output = $webClient.DownloadString("http://google.com")
+   $endTime = get-date
+
+
+   if ($output -like "*Bing.com*") {
+      "Success`t`t" + $startTime.DateTime + "`t`t" + ($endTime - $startTime).TotalSeconds + " seconds"
+   } else {
+      "Fail`t`t" + $startTime.DateTime + "`t`t" + ($endTime - $startTime).TotalSeconds + " seconds"
+   }
+
+
+
+   sleep(3)
+}
+
+
+{$WebsiteName = "http:/www.google.com","https://bencor.rprgonline.com","https://abghouston.rprgonline.com","https://effortlessira.rprgonline.com","https://printers401k.rprgonline.com","https://touchstone.rprgonline.com","http://www.trpc401k.com" 
+
+foreach ($website in $WebsiteName) {
+   $output = ""
+   $sitestring = $webClient.DownloadString($website)
+
+   if ($sitestring -like "*Login*") {}
+      else {
+      $wshell = New-Object -ComObject Wscript.Shell
+      $Output = $wshell.Popup("$website is unresponsive")     
+    }
+}}

@@ -1,0 +1,834 @@
+<!DOCTYPE html><html class="
+        no-js ">
+<head>
+<META http-equiv="Content-Type" content="text/html">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge"><meta http-equiv="P3P" content='CP="IDC DSP COR CURa ADMa OUR IND PHY ONL COM STA"'></meta><meta name="ROBOTS" content="NOFOLLOW">
+<meta http-equiv="EXPIRES" content="Mon, 22 Jul 2002 11:12:01 GMT">
+<meta http-equiv="Cache-Control" content="private, no-cache, no-store, must-revalidate, max-age=0">
+<meta http-equiv="Pragma" content="no-cache">
+<title>Your Retirement Plan Administration Website
+            [Login]
+          </title>
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="stylesheet" href="resources/css/vendor/normalize.css">
+<link rel="stylesheet" href="resources/css/vendor/datepicker.css">
+<link rel="stylesheet" href="resources/css/app.min.css">
+<link rel="stylesheet" href="resources/css/DEFAULT.min.css"><!--csscode--><script type="text/Javascript">
+          var ServiceConfig = {};
+          ServiceConfig.ParticipantPlanId='';
+          ServiceConfig.SponsorPlanId='';
+          ServiceConfig.CSRFToken='';                    
+          ServiceConfig.StatusCd='';
+          ServiceConfig.SecurityKey='';
+          
+
+        </script><style>
+          .font-color{
+          color:#414141 !important;
+          }
+        </style><script type="text/Javascript">ServiceConfig.GUID='';ServiceConfig.Token='376844494D7043456E48424558352F4C6A36796155673D3D7445666432427143445949482F516F49445450686851684158366
+E504368717374444869636232737A4B6341';ServiceConfig.LSToken='6375553856486A396E37734F3048415A4F68627753673D3D4A7A67456F6B3356754E626A3654664548674A4D5857654951554252574578786164364F44784333643
+05541';ServiceConfig.ServiceSiteId='d733cca3-b447-45d0-a805-ee8957e10976';ServiceConfig.ServiceWebAPIURL='https://printers401k.rprgonline.com/reliuswebapi/';ServiceConfig.ServiceDebugCd='FALS
+E';ServiceConfig.LangCd='ENG';ServiceConfig.ServiceLimitUploadOptCd='N';ServiceConfig.ServiceLimitUploadExt='GIF,JPG,JPEG,TIFF,TIF,BMP,PNG,CSV,DOC,XLS,DOCX,XLSX,TXT,XML,PDF';ServiceConfig.Ser
+viceLimitUploadType='';ServiceConfig.SecId='';ServiceConfig.IsDemoUser='N';ServiceConfig.MfaEnabled='false';ServiceConfig.HasOTPOcurred='false';ServiceConfig.IsOTPDeviceReset='false';ServiceC
+onfig.UserHasAnyOTPDevices='false';ServiceConfig.MFAUID='';ServiceConfig.MFAPD='';ServiceConfig.OBFMFAUID='';ServiceConfig.OBFMFAPD='';ServiceConfig.SelectedOTPDevice='';ServiceConfig.SELECTE
+DOTPDEVICEHASH='';ServiceConfig.OBFMFASELECTEDOTPDEVIC='';ServiceConfig.FormattedSelectedOTPDevice='';ServiceConfig.AvailableOTPDevices='';ServiceConfig.UserType='';ServiceConfig.PlanLevelMfa
+='false';ServiceConfig.MfaProvider='E';ServiceConfig.MfaVoiceOption='false';ServiceConfig.Sid='5yWIv0YL8Ao9neuzsQF4aQ==uLumuV/x9+n+HFewPmdI1gA=';ServiceConfig.TorV='T';ServiceConfig.CustomMes
+sage='';ServiceConfig.MfaOtpFL='';ServiceConfig.MfaUN='';ServiceConfig.ContactId='';</script><!--jscode--><script type="text/javascript" src="script/common/MooTools-Core-1.5.1.js"></script><s
+cript type="text/javascript" src="
+            script/tableheirarchy-min.js
+          "></script><script type="text/javascript" src="
+            script/common/sortableTable-min.js
+          "></script><script src="resources/js/vendor/vendor.js?v=22.0"></script><script type="text/javascript">try{jQuery.noConflict();}catch(e){}</script><script type="text/javascript" src=
+"script/common/mootools-xml.js"></script><script type="text/javascript" src="script/dg-filter.js"></script><script type="text/javascript" src="script/DD_roundies_0.0.2a.js"></script><script s
+rc="resources/js/vendor/fusioncharts/fusioncharts.js"></script><script src="resources/js/vendor/tooltip.js"></script><script src="resources/js/vendor/velcro.min.js"></script><script type="tex
+t/javascript" src="SCRIPT/common/tablewithfrozencolumn-min.js"></script><script src="resources/js/reliusadmin.min.js"></script><script type="text/javascript" src="script/sha256.jquery.debug.j
+s"></script><link href="sortableTable.css" rel="stylesheet" type="text/css" /><link href="CSS-Files/customcombo.css" rel="stylesheet" type="text/css" /><script type="text/javascript" src="
+            script/planmenu-min.js
+          "></script><link rel="stylesheet" href="windowfiles/dhtmlwindow.css" type="text/css"><script type="text/javascript" src="windowfiles/dhtmlwindow.js">
+		
+		/***********************************************
+		* DHTML Window Widget- C Dynamic Drive (www.dynamicdrive.com)
+		* This notice must stay intact for legal use.
+		* Visit http://www.dynamicdrive.com/ for full source code
+		***********************************************/
+		
+		</script><script type="text/javascript">
+          var global_strPlanID='';
+          var global_strRANDOMNUM='';
+        </script><style id="antiClickjack">body{display:none !important;}</style><script type="text/javascript">if (self === top) {var antiClickjack = document.getElementById("antiClickjack")
+;  antiClickjack.parentNode.removeChild(antiClickjack);  } else { top.location = self.location;  }</script><script type="text/javascript">function changePage(page){document.REDIRECTION.action
+=page;document.REDIRECTION.submit();}</script><!--[if lt IE 9]><script src="script/shim/html5shiv.js"></script><![endif]--><style>          
+        @media print and (orientation:landscape) {                                                     
+                                                                                                                                     
+      }
+        </style><script type="text/javascript">
+
+
+          var myGlobalSearch = null;
+          function HidePartList()
+          {
+
+          if (jQuery("#GLOBALSEARCHlistToBeFiltered"))
+          {
+          jQuery("#spanlistbox").hide();
+          jQuery("#GLOBALSEARCHlistToBeFiltered").html("");
+          jQuery("#GLOBALSEARCHCRITERIA").val("");
+          }
+          }
+
+          function ShowStaticPlanSelection()
+          {
+          if(jQuery(jQuery('#staticplanselection').children('ul')[0]).hasClass('submenuShow'))
+          {
+          HideStaticPlanSelection();
+          }
+          else
+          {
+          jQuery(jQuery('#staticplanselection').children('ul')[0]).addClass("submenuShow");
+          jQuery("#plansectionheader").addClass("open");
+
+          }
+
+          }
+
+          function HideStaticPlanSelection()
+          {
+
+          jQuery(jQuery('#staticplanselection').children('ul')[0]).removeClass("submenuShow");
+          jQuery("#plansectionheader").removeClass("open");
+          if (myGlobalSearch!=null)
+          {
+          myGlobalSearch.hideList();
+          }
+
+          }
+
+          jQuery(document).ready(function(){
+
+          
+
+          if (typeof(globalSearch) != 'undefined')
+          {
+          setGlobalSearch();
+          }
+
+
+          jQuery("#GLOBALSEARCHCRITERIA").keydown(function (e, obj) {
+          var key;
+          if (!e) e=window.event;
+          if ((e.charCode) && (e.keyCode==0)){
+          key = e.charCode
+          }else{
+          key = e.keyCode;
+          }
+          //obj.filterData();
+          switch (key) {
+          case 13: // enter
+          //prevent submitting form if only one element
+          return stopEvent(e);
+          }
+          });                    
+          });
+          
+
+
+          //window.addEvent('domready', setGlobalSearch);
+
+          function setGlobalSearch(){
+          myGlobalSearch = new globalSearch({
+          combobox : $('comboboxGlobalSearch'),
+          filtertype : $('GLOBALSELECTCRITERIA'),
+          fieldValue : $('comboboxGlobalSearch').getElementsByTagName('input')[0],
+          filterField : $('comboboxGlobalSearch').getElementsByTagName('input')[1],
+          filterEl : $('comboboxGlobalSearch').getElementsByTagName('ul')[0],
+          divPopup : $('comboboxGlobalSearch').getElementsByTagName('span')[1],
+          xPathFilterElements : '.listItem',
+          onMatchShowChildren : true,
+          listeners : {
+          //beforefilter : function() { alert('beforefilter'); },
+          afterfilter : function() { this.showList() }//,
+          //beforefilterData : function() { alert('beforefilterData'); },
+          // afterfilterData : function() { alert(myGlobalSearch.searchIndex.length); }
+          }
+          }
+          );
+
+          // myGlobalSearch.setEvents(myGlobalSearch);
+
+          //document.addListener("mouseup", hidepopup2, false);
+          }
+          function hidepopup2(){
+          //hide popup whenever page is clicked
+          myGlobalSearch.hideList();
+          }
+        </script></head>
+<body onLoad="return window_onload();"><header class="mainHeader"><div class="container">
+<div class="row">
+<div class="primary-logo col-sm-6"><SPAN CLASS="bannerlinks"><A HREF="http://www.diversifiedfa.com"><IMG SRC="graphics/custom/printerslogo_new.png" BORDER="0" alt="Diversified Financial Advis
+ors"/></A></SPAN>
+</div>
+<div class="secondary-logo col-sm-6"></div><nav class="options-bar pull-right text-right" rol="navigation"><input id="MORNINGMSG" type="hidden" value="Good Morning, "><input id="EVENINGMSG" t
+ype="hidden" value="Good Evening, "><input id="AFTERNOONMSG" type="hidden" value="Good Afternoon, "><ul>
+<li class="profile-menu welcomemsg">
+<div class="push">&nbsp;</div>
+<div style="font-size: 11px;">&nbsp;</div></li><br class="mobile"></ul></nav></div>
+</div></header><div id="screenarea" style="">
+<div id="pagecontainer"><!--Menu start--><nav role="navigation" class="
+              mainNav top-top"><ul class=" mainmenu container"></ul></nav><nav class="profile" role="navigation" id="profilemenuslider"></nav><!--Menu end--><div class="page-content"><script 
+type="text/javascript">
+		//No dependence on other strings
+		var strEnrollInPlanErrMsg1 = 'The value you entered is not a number.  Please enter a Social Security number.';
+		var strEnrollInPlanErrMsg2 = 'The value you entered is not a Social Security number.  Please enter a Social Security number.';
+	</script><script type="text/javascript" src="
+        script/enrollinplan-min.js
+      "></script><script type="text/javascript" src="script/javascript.js"></script><script type="text/javascript">
+		//No dependence on other strings
+		var strForgotPasswordErrMsg1 = 'The value you entered is not a number.  Please enter a Social Security number.';
+		var strForgotPasswordErrMsg2 = 'The value you entered is not a Social Security number.  Please enter a Social Security number.';
+		var strForgotPasswordErrMsg3 = 'Please enter your verification answer prior to submitting this request.';
+		
+    //var strZipCodeRequired = '';
+		//var strBirthDateRequired = '';
+		//var strUserIdRequired = '';
+    
+    var strZipCodeRequired = 'Please confirm your zip code.';
+    var strBirthDateRequired = 'Please confirm your date of birth.';
+    var strUserIdRequired = 'Sponsors must at least know their user ID.  Please enter your user ID and try again.';
+  </script><script type="text/javascript" src="script/forgotpassword.js"></script><script type="text/javascript">
+      
+				m_strFirstNam = 'Please confirm your first name.'; 
+				m_strLastNam = 'Please confirm your last name.'; 
+			
+    </script><div class="pull-extremeleft full-width fixed-attachment" id="login-background">
+<div class="col-md-12 hidden-xs"><br><br></div>
+<div id="page" class="container">
+<div id="messagestrip"></div>
+<div class="row flip">
+<div>
+<div class="text-center">
+
+<!---<a href="contactus.aspx" target=_blank><b>Contact Us</b> </a></P>---></div>
+<div id="loginmessage" class="text-center"><!---<font color="#CC0000"><p><strong><u>Important Note:</u></strong>
+</br>
+We will be performing system maintenance this weekend Dec 8-9.  The maintenance window is scheduled for 8:00 AM CDT Sat - 1:00 PM CDT Sun.  
+During this time access will not be available.  We apologize for any inconvenience that this may cause.</p></font>--->
+
+<!---<div class="infobox">
+  <div class="infoboxcontainer" style="padding: 10px 100px;">
+<P><font color="#CC0000"><p><strong><u>Important Note:</u></strong>
+</br>
+1/1/2019 - New Year's Day - Our office is closed.<br><br>
+** Last day to request, review or process online distributions and loans for 2018 is December 26th. 
+</p></font>      
+  </div>
+</div>--->
+
+<!---<div class="infobox">
+  <div class="infoboxcontainer" style="padding: 20px 100px;">
+<P><font color="#CC0000"><p><strong><u>Important Note:</u></strong> 07/04/2019 - Our office is closed and the market closes 1:00 ET (12:00 CT) on 7/3. Therefore, transactions entered after 12
+:00 CT, July 3 will be processed on July 5.<br><br>
+</p></font>      
+  </div>
+</div>--->
+
+<!--
+<div class="infobox">
+  <div class="infoboxcontainer" style="padding: 10px 90px;">
+<P><font color="#CC0000"><p><strong><u>Important Note:</u></strong>
+</br>
+Feb 18, 2019 - President's Day - No ACH or trading will occur.
+</p></font>
+  </div>
+</div>
+-->
+<!---<div class="infobox">
+  <div class="infoboxcontainer" style="padding: 20px 100px;">
+<P><font color="#CC0000"><p><strong><u>Important Note:</u></strong> 01/02/2017 - Our office is closed.<br><br>
+** Last day to request, review or process online distributions and loans for 2016 is December 23rd. 
+</p></font>      
+  </div>
+</div>--->
+
+<!---<div class="infobox">
+  <div class="infoboxcontainer" style="padding: 20px 100px;">
+<P><font color="#CC0000"><p><strong><u>Important Note:</u></strong><br>Thursday, Nov. 22 - Our office is closed.<br>Friday, Nov. 23 - 
+** Trades initiated before noon CST will be processed the same day. 
+</p></font>      
+  </div>
+</div>--->
+
+<!--<font color="#CC0000"><p><strong><u>Important Note:</u></strong>
+</br>
+9/5/2016 - Labor Day - our office is closed, no processing occurs.</font>-->
+
+
+<!---<font size=-1>Welcome to the login page for our updated user website!  The new site uses a modernized look and a user-friendly interface to enhance your retirement planning and account m
+anagement experience.  To familiarize you with the updated site, we have created a Participant FAQ that can be viewed by clicking 
+
+ <a target="_blank" href="https://printers401k.rprgonline.com/PDFs/PrintersParticipantFAQ.pdf
+">here.</a>
+and a Sponsor FAQ that can be accessed by clicking <a target="_blank" href="https://printers401k.rprgonline.com/PDFs/PrintersSponsorFAQ.pdf
+">here.</a>
+
+
+It is recommended that you have these FAQâ€™s accessible as you navigate the site.<BR>
+</font size> </div>
+</div>
+</div>
+</div>---></div>
+<div class="row">
+<div class="col-sm-2"></div>
+<div class="col-sm-8 no-padding"></div>
+</div>
+<div id="login" class="col-md-4 col-md-offset-4 card enter">
+<div class="card-header row" id="divHeader">
+<div class="new-user pull-left "><a class="white newUser language-selection" href="#"><span class="glyphicons circle_plus icon glyphiconsloginpage"></span></a><a class="white newUser language
+-selection login-font12px login-newuser-margin" href="#">&nbsp;<font size=5>New User</font size></a></div>
+<div class="pull-right language-selection login-orangetext login-font12px login-language-margin " ng-show="hasLanguageSelection"><span><form method="post" action="default.aspx" name="LANGFORM
+"><input type="hidden" name="LANGUAGE">&nbsp;<a href="javascript:void(0);" onclick="javascript:document.LANGFORM.LANGUAGE.value='ENG';document.LANGFORM.submit();" class="login-link-disable lo
+gin-font12px">English</a>&nbsp;/&nbsp;<a href="javascript:void(0);" onclick="javascript:document.LANGFORM.LANGUAGE.value='SPA';document.LANGFORM.submit();" class="login-font12px">EspaÃ±ol</a>
+</form></span></div>
+</div>
+<div class="card-body login-greeting">
+<h2 class="text-center login-orangetext" ng-show="greeting"><b></b></h2>
+<form action="default.aspx" id="loginform" method="post" name="loginform" onsubmit="return ProcessLogin();" AUTOCOMPLETE="off"><input type="hidden" name="BFPT" id="BFPT"><input type="hidden" 
+name="BFGUID" id="BFGUID"><input type="hidden" name="LANGUAGE" value="ENG"><div id="loginformcell">
+<div id="transition" style="display:none;">
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<div class="text-center login-orangetext">
+<div style="margin: auto;" class="progressanim"><img src="graphics/custom/loading_anim.gif" border="0" alt="LOADING...please wait"/><div id="one" style="margin:auto;width:300px;text-align:cen
+ter;" class="progressmsg">Please wait...</div>
+</div>
+</div>
+</div>
+<div id="loginpage" class="loginpage-margintop">
+<div class="form-group username"><label for="USERID" class="required"><b>User ID:</b></label><input type="hidden" name="USERID" id="USERID"><input type="text" name="prevent_autofill" id="prev
+ent_autofill" value="" style="display:none;"><input type="password" name="password_fake" id="password_fake" value="" style="display:none;"><input type="text" id="ReliusUserID" name="ReliusUse
+rID" class="form-control loginpage-userpass-margintop" required="required" onChange="javascript:ReliusUserIDChange();"></div>
+<div class="form-group password"><label for="PASSWDTXT" class="required"><b>Password</b></label><input type="password" name="PASSWDTXT" id="PASSWDTXT" value="" required="required" class="form
+-control loginpage-userpass-margintop"></div>
+<div class="form-group clearfix loginpage-default-clearfix">&nbsp;<a href="#" class="forgot-password pull-right">Forgot User ID or Password?</a></div>
+<div class="form-group loginpage-roleselection-margintop"><select name="usertype" id="usertype" class="form-control"><option value="participant" selected="true">Participant</option>
+<option value="sponsor">Sponsor</option>
+<option value="advisor">Advisor</option></select><script type="text/javascript">
+                          var userTypeCnt = document.getElementById('usertype').length;
+                          if (userTypeCnt <= 1) {
+                           document.getElementById('usertype').style.display = 'none';
+                          }
+                       </script><div class="remember loginpage-remember-paddingbottom"></div>
+</div>
+<div class="form-group  submit"><button type="submit" value="submit" class="btn" onclick="javascript:SetGuid();GenerateBrowserFootPrint();HideHeaderFooter(); SaveReliusUser();">Login</button>
+</div>
+</div>
+</div><input type="hidden" name="DROP" value=""><input type="hidden" name="LoginButton" value="true"><input type="hidden" name="AppVersion" value=""></form>
+</div>
+<div class="card-footer loginpage-cardfooter-paddingbottom" id="divFooter">
+<div><input type="hidden" name="sabi" value=""></div>
+</div>
+</div>
+</div>
+<div id="newUser" class="col-md-4 col-md-offset-4 card leave-right">
+<div class="card-header row">
+<div class="new-user pull-left"><a class="white newUserBack" href="#"><span class="glyphicons circle_arrow_left icon"></span>&nbsp;</a><a class="white newUserBack login-font12px" href="#">Bac
+k</a></div>
+<div class="pull-right language-selection login-orangetext login-font12px" ng-show="hasLanguageSelection"><span><form method="post" action="default.aspx" name="NWLANGFORM"><input type="hidden
+" name="LANGUAGE">&nbsp;<a href="javascript:void(0);" onclick="javascript:document.NWLANGFORM.LANGUAGE.value='ENG';document.NWLANGFORM.submit();" class="login-link-disable login-font12px">Eng
+lish</a>&nbsp;/&nbsp;<a href="javascript:void(0);" onclick="javascript:document.NWLANGFORM.LANGUAGE.value='SPA';document.NWLANGFORM.submit();" class="login-font12px">EspaÃ±ol</a></form></span
+></div>
+</div>
+<div class="card-body">
+<h2 class="text-center login-orangetext" ng-show="greeting"><b>New User</b></h2>
+<div class="row">
+<form class="form form-login">
+<div class="form-group  no-push"><label class="col-sm-12 no-padding-left"><input type="hidden" name="hidchknewwebuser" id="hidchknewwebuser" value="2"></label></div>
+</form>
+</div>
+<div class="row" style="min-height:115px">
+<div id="newwebuserid">
+<form action="newwebuser.aspx" id="frmnewwebuser" method="post" name="frmnewwebuser" class="form form-login" AUTOCOMPLETE="off"><input type="hidden" name="RANDOMNUM" value=""><input type="hid
+den" name="DROP" value=""><input type="hidden" name="LoginButton" value="true"><input type="hidden" name="SELECTIONTYPE" id="SELECTIONTYPE" value="P"><input type="hidden" name="STEP" value="1
+"><input type="hidden" name="SEC_STEP" value="0A1JGynZa/CuIfUHTwfqog==PAmL/t+hGsbPLTwy1KfAzgA="><input type="hidden" name="NEWWEBUSER" value=""><input type="hidden" name="SEC_PARTID" value="1
+"><input type="hidden" name="SEC_STATUS" value=""><input type="hidden" name="SEC_PASSWORD" value="8lfIpb/dQMdI2C69nhOX1A==aMDWLJR7Ec1KznVOXZZq7ax4GF4yjDmo+HiyW5+99CAA"><div class="form-group 
+SSN" style="margin-top:0px;"><label for="ssn" class="required">SSN# (no dashes)</label><input type="text" name="prevent_autofill" id="prevent_autofill" value="" style="display:none;"><input t
+ype="password" name="password_fake" id="password_fake" value="" style="display:none;"><input type="password" id="SSN2" name="INITIALSSN" value="" size="9" maxlength="9" class="form-control"><
+/div>
+<div class="form-group bdate"><label for="bdate" class="required">Birth Date (MM/DD/YYYY)</label><input type="text" name="BIRTHDATE1" value="" maxlength="10" onChange="isDate(this);" id="BIRT
+HDATE2" class=" form-control" ng-model="user.bdate" data-date-start-date="01/01/1900" data-date-end-date="javascript:new Date()"></div>
+<div class="form-group zip"><label for="zip" class="required">Zip Code</label><input type="text" maxlength="10" name="ZIPCODE1" ng-model="user.zip" id="ZIPCODE2" class="form-control"></div>
+</form>
+</div>
+</div>
+<form class="form ">
+<div class="form-group submit row">
+<div class="col-sm-7 col-sm-push-4"><button type="button" value="next" class="btn" onclick="javascript:Submit();">NEXT</button></div>
+<div class="col-sm-4 col-sm-pull-7 topsm"><a href="javascript:void(0)" onclick="javascript:window.location.href=&quot;default.aspx&quot;" class="cancelButton">CANCEL</a></div>
+</div>
+</form>
+</div>
+</div>
+<div id="forgotPassword" class="col-md-4 col-md-offset-4 card leave-left">
+<div class="card-header row">
+<div class="new-user pull-left"><a class="white forgotPasswordBack" href="#"><span class="glyphicons circle_arrow_left icon"></span>&nbsp;</a><a class="white forgotPasswordBack login-font12px
+" href="#">Back</a></div>
+<div class="pull-right language-selection login-orangetext login-font12px" ng-show="hasLanguageSelection"><span><form method="post" action="default.aspx" name="FPLANGFORM"><input type="hidden
+" name="LANGUAGE">&nbsp;<a href="javascript:void(0);" onclick="javascript:document.FPLANGFORM.LANGUAGE.value='ENG';document.FPLANGFORM.submit();" class="login-link-disable login-font12px">Eng
+lish</a>&nbsp;/&nbsp;<a href="javascript:void(0);" onclick="javascript:document.FPLANGFORM.LANGUAGE.value='SPA';document.FPLANGFORM.submit();" class="login-font12px">EspaÃ±ol</a></form></span
+></div>
+</div>
+<div class="card-body">
+<h2 class="text-center login-orangetext " ng-show="greeting"><b>Request Credentials</b></h2>
+<div class="toplg"></div>
+<form><label class="form-group"><div>Please enter the required info below. A message will be sent to your e-mail address and allow you to view/reset your password.</div> <div class='topsm'><s
+mall>Note: This is only available if you have previously entered the alternate verification info.</small></div></label></form>
+<div class="row">
+<form id="verification" method="post" name="verification" class="form form-login" action="forgotpassword.aspx" AUTOCOMPLETE="off"><input type="text" name="prevent_autofill" id="prevent_autofi
+ll" value="" style="display:none;"><input type="password" name="password_fake" id="password_fake" value="" style="display:none;"><input type="hidden" name="RANDOMNUM" value=""><input type="hi
+dden" name="DROP" value=""><input type="hidden" name="LoginButton" value="true"><input type="hidden" name="STEP" value="1"><input type="hidden" name="SEC_STEP" value="0A1JGynZa/CuIfUHTwfqog==
+PAmL/t+hGsbPLTwy1KfAzgA="><input type="hidden" name="NEWWEBUSER" value=""><input type="hidden" name="SEC_PARTID" value="1"><input type="hidden" name="SEC_STATUS" value=""><input type="hidden"
+ name="SEC_PASSWORD" value="8lfIpb/dQMdI2C69nhOX1A==aMDWLJR7Ec1KznVOXZZq7ax4GF4yjDmo+HiyW5+99CAA"><div class="form-group role"><label for="role">Role</label><select name="SELECTIONTYPE" id="S
+ELECTIONTYPE" class="form-control" onchange="javascript:ShowHideParticipantSection(this)"><option value="P" selected>Participant</option>
+<option value="S">Sponsor</option></select></div>
+<div id="partsection">
+<div class="form-group row"><label for="ssnumInput" class="required">SSN# (no dashes)</label><input type="password" id="SSN" name="INITIALSSN" value="" size="9" maxlength="9" class="form-cont
+rol" ng-model="user.ssnum"></div>
+<div class="form-group  row"><label for="fnameInput" class="required">Birth Date (MM/DD/YYYY)</label><input type="text" name="BIRTHDATE1" value="" maxlength="10" onChange="isDate(this);" id="
+BIRTHDATE1" class="form-control " ng-model="user.bdate" data-date-start-date="01/01/1900" data-date-end-date="javascript:new Date()"></div>
+<div class="form-group  row"><label for="lnameInput" class="required">Zip Code</label><input class="form-control" type="text" maxlength="10" name="ZIPCODE1" ng-model="user.zip" id="ZIPCODE1">
+</div>
+</div>
+<div id="sponsorsection" style="display:none">
+<div class="form-group row"><label for="ssnumInput" class="required">Login ID</label><input type="text" id="LOGINID" name="LOGINID" value="" size="30" maxlength="30" class="form-control" ng-m
+odel="user.loginid"></div>
+<div class="form-group row"><label for="ssnumInput" class="required">First name</label><input type="password" name="FIRSTNAM" value="" size="20" maxlength="20" id="FIRSTNAM" class="form-contr
+ol" ng-model="user.firstnam"></div>
+<div class="form-group row"><label for="ssnumInput" class="required">Last name</label><input type="password" name="LASTNAM" value="" size="20" maxlength="20" id="LASTNAM" class="form-control"
+ ng-model="user.lastnam"></div>
+</div>
+<div class="col-sm-12 hidden-xs">&nbsp;</div>
+<div class="form-group submit row">
+<div class="col-sm-7 col-sm-push-4"><button type="button" value="next" class="btn" onclick="javascript:submitForm()">NEXT</button></div>
+<div class="col-sm-4 col-sm-pull-9 topsm"><a href="javascript:void(0)" class="cancelButton" onclick="javascript:window.location.href=&quot;default.aspx&quot;">CANCEL</a></div>
+</div>
+</form>
+</div>
+</div>
+<div><script type="text/javascript">             
+              function showConfirmPassword(){
+              showConfirm2('');              
+              }
+            </script></div>
+</div>
+</div><!---<div class="infobox">
+  <div class="infoboxcontainer" style="padding: 20px 100px;">
+<P><font color="#CC0000"><p><strong><u>Important Note:</u></strong>
+</br>
+We will be performing system maintenance this weekend, Oct 17 - 18.  The maintenance window is scheduled for 6:00 AM CDT Sat - 3:00 PM CDT Sun.  
+During this time access will not be available.  We apologize for any inconvenience that this may cause.</p></font>
+  </div>
+</div>--->
+
+<!--<div class="infobox">
+  <div class="infoboxcontainer" style="padding: 20px 100px;">
+<P><font color="#CC0000"><p><strong><u>Important Note:</u></strong>
+</br>
+1/18/2016 - Martin Luther King Day, no processing occurs.
+</p></font>
+  </div>
+</div>--->
+
+<!---<div class="infobox">
+  <div class="infoboxcontainer" style="padding: 20px 100px;">
+ <div style="text-align:center">
+<FONT size=2>Click <a target="_blank" href="http://www.trpcweb.com/PDFs/PrivacyPolicy.pdf">here</a> to view The Retirement Plan Company's privacy policy.
+</font>
+<br><br>
+
+If you have questions, you may use our <A href="https://www.trpc401k.com/contactus.aspx" TARGET="_new">on-line participant service center.</A><P/>
+</p></font>      
+  </div>
+</div>
+</div>--->
+
+
+
+
+
+
+<div class="bottomstuckfooter">
+<div id="footersectionprimarycontainer">
+<div id="footersectionpositioncontainer">
+<div id="footersectionlinkpositioncontainer"></div>
+</div>
+</div><script src="https://ssl.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-1691853-3";
+urchinTracker();
+</script></div>
+</div>
+</div><script type="text/javascript" src="
+        script/loginimage-min.js
+      "></script><script type="text/javascript" src="
+        script/javascript-min.js
+      "></script><script type="text/javascript" src="
+        script/login-min.js
+      "></script><script type="text/javascript" src="script/jquery_1.8.3-min.js"></script><script type="text/javascript" src="script/sha256.jquery.debug.js"></script><script type="text/javasc
+ript" src="script/MFA_BrowserFootprint-min.js"></script><script type="text/javascript">
+      var browser = 'Unknown';
+      var guid = '';
+      var sguid = '';
+      var aguid = '';
+      adjustLoginBackground();
+      function GetMaskedUserid() {
+      var reliususerid = '';
+      var strlen = reliususerid.length;
+      var actualstring;
+
+      actualstring = reliususerid.substring(0,4);
+      var i = 0;
+      var intcount = strlen - actualstring.length;
+
+      for(i=0; i<intcount; i++){
+      actualstring = actualstring + '*';
+      }
+
+      return actualstring.toString();
+      }
+
+      function ReliusUserIDChange()
+      {
+      document.loginform.USERID.value = document.loginform.ReliusUserID.value;
+      if (document.loginform.SAVEUSERID){
+      document.loginform.SAVEUSERID.checked = false;
+      }
+      if (document.loginform.SAVEUSER){
+      document.loginform.SAVEUSER.value = 'N';
+      }
+      }
+
+      function SaveReliusUser(){
+      if (document.loginform.SAVEUSERID){
+      if(document.loginform.SAVEUSERID.checked){
+      document.loginform.SAVEUSER.value = 'Y';
+      }
+      }
+      }
+
+      document.loginform.ReliusUserID.value =GetMaskedUserid();
+      document.loginform.USERID.value = '';
+
+      function window_onload()
+      {
+      if (document.loginform)
+      {
+      //document.loginform.USERID.value='';
+      //document.loginform.PASSWDTXT.value='';
+      if(document.loginform.ReliusUserID.value==='')
+      {
+      document.loginform.ReliusUserID.select();
+      document.loginform.ReliusUserID.focus();
+      }
+      else
+      {
+      if(document.loginform.USERID.value === '')
+      {
+      document.loginform.USERID.value = document.loginform.ReliusUserID.value;
+      }
+      }
+
+
+      // Adding Custom Text Links in Help menu
+      var ul = document.getElementById("helpList");
+
+      
+        var li_1 = document.createElement("li");
+        var customTextLink_1 = document.createElement('a');
+        customTextLink_1.setAttribute('href', '/contactus.html');
+        customTextLink_1.innerHTML = "Contact Us";
+        li_1.appendChild(customTextLink_1);
+        ul.appendChild(li_1);
+      
+
+
+      }
+
+      var isPasswordScreen = 'false';
+      var isNewWebUser = '';
+      if (isPasswordScreen == "true" ||  isNewWebUser=="true")
+      {
+      showConfirmPassword();
+      }
+
+      var isNewScreen = 'false';
+      if (isNewScreen == "true")
+      {
+      showConfirmNewUser();
+      }
+
+      }
+      var str_JSCOOKIESNOTENABLED='Non-persistent cookies, cookies that exist in memory but do not get saved to your hard drive, must be enabled for this application to work.  Login cannot pr
+oceed until you change your brower options to enable cookies.';
+      var strPrompt = 'Now when you login the current user will be dropped and you will be allowed in.';
+
+
+      
+      function showConfirmNewUser(){
+      window_onloadNewUser();
+      showConfirm2('');
+      }
+
+      function window_onloadNewUser() {
+      if (document.loginform)
+      {
+      document.enrollform.PIN.select();
+      document.enrollform.PIN.focus();
+      }
+      }
+
+      function EnrollDropUser() {
+      //var strPrompt = 'Now when you login the current user will be dropped and you will be allowed in.';
+      document.enrollform.DROP.value = 'true';
+      //alert(strPrompt);
+      document.enrollform.PIN.select();
+      document.enrollform.PIN.focus();
+      }
+
+      
+      function ShowHideParticipantSection(selectedVal)
+      {
+      if (selectedVal.value == "S")
+      {
+      HideParticipantSection();
+      }
+      else
+      {
+      ShowParticipantSection();
+      }
+      }
+
+      function HideParticipantSection()
+      {
+      jQuery("#partsection").hide();
+      jQuery("#SSN").val('');
+      jQuery("#BIRTHDATE1").val('');
+      jQuery("#ZIPCODE1").val('');
+      jQuery("#sponsorsection").show();
+      jQuery("#SELECTIONTYPE").val("S")
+      }
+
+      function ShowParticipantSection()
+      {
+      jQuery("#sponsorsection").hide();
+      jQuery("#LOGINID").val('');
+      jQuery("#FIRSTNAM").val('');
+      jQuery("#LASTNAM").val('');
+      jQuery("#partsection").show();
+      jQuery("#SELECTIONTYPE").val("P")
+      }
+
+      jQuery(document).ready(function(){
+      
+      // Setting background image randomly
+      var backGroundImageFolderPath = 'resources/images/Participant';
+      var backGroundImageName = 'background4.jpg';
+                      
+      var imageUrl = backGroundImageFolderPath + "/" + backGroundImageName;
+      if(backGroundImageFolderPath == "" || backGroundImageName == ""){
+        imageUrl = "resources/images/background1.jpg";
+      }
+      jQuery('#login-background').css("background-image", 'url("' + imageUrl + '")');
+      
+      // Setting background image randomly ends
+      
+      if(jQuery("#SELECTIONTYPE") !=null)
+      {
+      if (jQuery("#SELECTIONTYPE").val()=="S")
+      {
+      HideParticipantSection();
+//      jQuery("#LOGINTYPE").val("S");
+      }
+      else
+      {
+      ShowParticipantSection();
+  //    jQuery("#LOGINTYPE").val("P");
+      }
+      }
+
+      var isPasswordScreen = 'false';
+      var success = 'false';
+      var isNewScreen = 'false';
+      var isNewWebUser = '';
+      var currStep = '1';
+      
+      if (isPasswordScreen == "true" || (isNewWebUser == "true" && success=="true" && currStep=="2"))
+      {      
+      jQuery('.forgot-password').click();
+      }
+       if (isNewScreen == "true" ||  (isNewWebUser == "true" && success=="false") || (isNewWebUser == "true" && success=="true"  && currStep=="1"))
+       {
+      if (isNewScreen == "true")
+         {
+          if (jQuery("#chknewuser")!=undefined)
+            jQuery("#chknewuser").attr("checked","checked");
+         ShowNewUser();
+         }
+          else
+          {
+          if ( jQuery("#chknewwebuser")!=undefined)
+           jQuery("#chknewwebuser").attr("checked","checked");
+          ShowNewWebUser();
+          }
+      jQuery('.newUser').click();
+        }
+        else
+        {
+         var displayNewUser = 'false';                  
+         
+         
+        
+        if (displayNewUser == 'true')
+        {
+          if (jQuery("#chknewuser")!=undefined)
+            jQuery("#chknewuser").attr("checked","checked");
+          ShowNewUser();
+          }
+         else
+         {
+         if (jQuery("#chknewwebuser")!=undefined)
+         jQuery("#chknewwebuser").attr("checked","checked");
+          ShowNewWebUser();
+          }
+        }
+      });
+
+      function HideHeaderFooter() {
+        if(document.loginform.ReliusUserID.value != "" && document.loginform.PASSWDTXT.value != "")
+        {
+          $('divHeader').style.display = 'none';
+          $('divFooter').style.display = 'none';
+        }
+        return true;
+      }
+      
+    
+      function ShowHideWebUser(ele)
+      {
+        if (ele!=null && ele.value!=null)
+        {          
+          if (ele.value == "1")
+          {
+             
+             ShowNewUser();
+          }
+          else
+          {
+            
+            ShowNewWebUser();
+          }
+        }
+      }
+      
+      function ShowNewUser()
+      {
+      if (jQuery("#newwebuserid")!=undefined)
+         jQuery("#newwebuserid").hide();            
+       if (jQuery("#chknewwebuser")!=undefined)
+         jQuery("#chknewwebuser").removeAttr("checked");
+       if (jQuery("#newuserid")!=undefined)
+         jQuery("#newuserid").show();
+      }
+      
+      function ShowNewWebUser()
+      {
+      if (jQuery("#newuserid")!=undefined)
+        jQuery("#newuserid").hide();             
+       if (jQuery("#chknewuser")!=undefined)
+        jQuery("#chknewuser").removeAttr("checked");
+      if ( jQuery("#newwebuserid")!=undefined)
+        jQuery("#newwebuserid").show(); 
+      }
+      
+      function Submit()
+      {      
+      
+        if ((jQuery("#chknewuser") != undefined && jQuery("#chknewuser:checked").val() != undefined) || (jQuery("#hidchknewuser")!=undefined && jQuery("#hidchknewuser").val()=="1"))
+        {          
+            submitNewUserForm();
+        }
+        else if ((jQuery("#chknewwebuser") != undefined && jQuery("#chknewwebuser:checked").val() != undefined) || (jQuery("#hidchknewwebuser")!=undefined && jQuery("#hidchknewwebuser").val()
+=="2"))        
+        {
+          submitNewWebUser();
+        }
+      }
+      
+      function SetGuid()
+      {
+          if (document.getElementById('usertype') !=null && document.getElementById('usertype') != undefined)
+          {          
+            if (document.getElementById('usertype').value =='sponsor')
+            {
+              guid= sguid;
+            }
+            else if (document.getElementById('usertype').value =='advisor')
+            {
+              guid= aguid;
+            }
+          }
+      }
+      
+    </script></div>
+<div class="footer-pusher"></div><footer><div class="column col-sm-2">
+<div class="footer-logo"></div>
+</div>
+<div class="column col-sm-8 text-center">
+<div class="privacy-policy"><span class="text-nowrap"><font size="-2">Copyright &#169; <a href="http://www.diversifiedfa.com">Diversified Financial</a>. All rights reserved; the contents of t
+his site may not be reproduced or distributed without prior permission.</font>
+</span><span class="hidden-xs"> | </span><span><span class="visible-xs-inline"><br></span><span class="compatLink"><A style="color:#DDDDDD !important;" href="compatibletest.aspx" target="_bla
+nk">Problems viewing the site?</A></span></span></div>
+</div>
+<div class="column col-sm-2 text-nowrap"><nav class="footer-nav"><div class="dropup-menu"><a class="dropup-toggle"><span class="glyphicons glyphicons-circle-question-mark"></span> <span class
+="leftxsm"></span></a><ul role="helpmenu" aria-labelledby="helpMenu" id="helpList">
+<li role="presentation" title=""><a target="_help" role="helpmenuitem" tabindex="-1" accesskey="6" href="help/ENG/contents.htm">Help</a></li>
+</ul>
+</div></nav></div>
+<div class="clear-fix"></div></footer><form method="post" name="REDIRECTION" action="default.aspx" class="nospace"><input type="hidden" name="dummy"><input type="hidden" name="RANDOMNUM" valu
+e=""><input type="hidden" name="FIRSTPAGE"><input type="hidden" name="PLANID"><input type="hidden" name="QUICKLINKSPLANID"></form>
+</div>
+</div><input type="hidden" name="ramenu" id="ramenu" value="false"></body><script type="text/javascript">
+        function ShowCogWheel()
+        {
+        jQuery(".cog-wheel").hide();
+        jQuery("#profilemenuslider").hide();
+        if (jQuery(".profileHeader").attr("id") == "menuslider")
+        {
+        jQuery(".cog-wheel").show();
+        //   jQuery("#profilemenuslider").show();
+        }
+        }
+        function showSliderMenu()
+        {
+
+        if (jQuery("#FILEUPLOADSECTION").attr("id") === "FILEUPLOADSECTION")
+        {
+        
+        if (jQuery("#FILEUPLOADSECTION").attr("ng-app")==undefined || jQuery("#FILEUPLOADSECTION").attr("ng-app")==null || jQuery("#FILEUPLOADSECTION").attr("ng-app")=="")
+        {
+        
+        ShowFileUpload();
+        }
+        }
+        jQuery("#profilemenuslider").show();
+        }
+        function ShowFileUpload()
+        {
+        jQuery("#FILEUPLOADSECTION").attr("ng-app","fileUploadModule");
+        angular.bootstrap(document.getElementById("FILEUPLOADSECTION"),['fileUploadModule']);
+        }
+        ShowCogWheel();
+      </script></html>
