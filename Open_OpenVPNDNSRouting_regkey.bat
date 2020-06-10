@@ -1,0 +1,1 @@
+SUBINACL /keyreg "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Dnscache\Parameters\DnsPolicyConfig" /grant=users=f
