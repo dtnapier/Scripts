@@ -1,0 +1,6 @@
+$url = "https://support.8x8.com/@api/deki/files/1947/VOD_6.8.5-3_64-bit.msi?revision=50"
+$output = "\\trpc56\c$\Users\lmartin\Downloads\8x8update.msi"
+$start_time = Get-Date
+
+Invoke-WebRequest -Uri $url -OutFile $output
+Write-Output "Time taken: $((Get-Date).Subtract($start_time).Seconds) second(s)"
