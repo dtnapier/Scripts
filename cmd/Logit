@@ -1,0 +1,12 @@
+@echo off
+SET LOGFILE=C:\IT\FBSI_Log.txt
+(call :logit)>>"%LOGFILE%"
+exit /b 0
+
+:logit
+@echo on
+echo %date% @ %time%
+
+
+
+echo %date% @ %time%
