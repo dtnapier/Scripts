@@ -1,0 +1,1 @@
+XCOPY "\\trpcweb.com\tpa\Clients\Blank TPA folder" "\\trpcweb.com\tpa\Clients\New_Client" /K /X /O /I /T
