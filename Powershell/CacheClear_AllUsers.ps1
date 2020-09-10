@@ -31,6 +31,23 @@ $list=Test-Path C:\users\$env:USERNAME\users.csv
 "-------------------"
 Write-Host -ForegroundColor Green "SECTION 2: Beginning Script..."
 "-------------------"
+##Files/folders not not needed in User folder loop
+
+#Defunct folders and programs
+Remove-Item -path "C:\ProgramData\SquirrelTemp" -Recurse -Force -EA SilentlyContinue -Verbose
+Remove-Item -path "C:\ProgramData\WebEx" -Recurse -Force -EA SilentlyContinue -Verbose
+Remove-Item -path "C:\ProgramData\Dropbox" -Recurse -Force -EA SilentlyContinue -Verbose
+
+#Temp files
+Remove-Item -path "C:\Windows\Temp\*" -Recurse -Force -EA SilentlyContinue -Verbose
+Remove-Item -path "C:\`$recycle.bin\" -Recurse -Force -EA SilentlyContinue -Verbose
+
+#Temp files with time delay
+Get-ChildItem -path "C:\Temp\*" -Recurse -EA SilentlyContinue | Where-Object {($_.LastWriteTime -lt (Get-Date).AddDays(-30))} | Remove-Item -Recurse -Force -EA SilentlyContinue -Verbose
+
+#Parallels logs - 6 months delayed
+Get-ChildItem -path "C:\ProgramData\Parallels\RASLogs\univprn_*.log" -EA SilentlyContinue | Where-Object {($_.LastWriteTime -lt (Get-Date).AddDays(-180))} | Remove-Item -Force -EA SilentlyContinue -Verbose
+
 if ($list) {
 <#
     "-------------------"
@@ -42,7 +59,7 @@ if ($list) {
     Import-CSV -Path C:\users\$env:USERNAME\users.csv -Header Name | foreach {
             Remove-Item -path C:\Users\$($_.Name)\AppData\Local\Mozilla\Firefox\Profiles\*.default\cache\* -Recurse -Force -EA SilentlyContinue -Verbose
             Remove-Item -path C:\Users\$($_.Name)\AppData\Local\Mozilla\Firefox\Profiles\*.default\cache\*.* -Recurse -Force -EA SilentlyContinue -Verbose
-	        Remove-Item -path C:\Users\$($_.Name)\AppData\Local\Mozilla\Firefox\Profiles\*.default\cache2\entries\*.* -Recurse -Force -EA SilentlyContinue -Verbose
+	    Remove-Item -path C:\Users\$($_.Name)\AppData\Local\Mozilla\Firefox\Profiles\*.default\cache2\entries\*.* -Recurse -Force -EA SilentlyContinue -Verbose
             Remove-Item -path C:\Users\$($_.Name)\AppData\Local\Mozilla\Firefox\Profiles\*.default\thumbnails\* -Recurse -Force -EA SilentlyContinue -Verbose
             Remove-Item -path C:\Users\$($_.Name)\AppData\Local\Mozilla\Firefox\Profiles\*.default\cookies.sqlite -Recurse -Force -EA SilentlyContinue -Verbose
             Remove-Item -path C:\Users\$($_.Name)\AppData\Local\Mozilla\Firefox\Profiles\*.default\webappsstore.sqlite -Recurse -Force -EA SilentlyContinue -Verbose
@@ -79,14 +96,11 @@ if ($list) {
     Import-CSV -Path C:\users\$env:USERNAME\users.csv | foreach {
 
         #Defunct folders and programs
-        Remove-Item -path "C:\ProgramData\SquirrelTemp" -Recurse -Force -EA SilentlyContinue -Verbose
-        Remove-Item -path "C:\ProgramData\WebEx" -Recurse -Force -EA SilentlyContinue -Verbose
-        Remove-Item -path "C:\ProgramData\Dropbox" -Recurse -Force -EA SilentlyContinue -Verbose
         Remove-Item -path "C:\Users\$($_.Name)\AppData\Local\Microsoft\Teams" -Recurse -Force -EA SilentlyContinue -Verbose
-	    Remove-Item -path "C:\Users\$($_.Name)\AppData\Local\Microsoft\TeamsMeetingAddin" -Recurse -Force -EA SilentlyContinue -Verbose
+	Remove-Item -path "C:\Users\$($_.Name)\AppData\Local\Microsoft\TeamsMeetingAddin" -Recurse -Force -EA SilentlyContinue -Verbose
         Remove-Item -path "C:\Users\$($_.Name)\AppData\Local\Microsoft\TeamsPresenceAddin" -Recurse -Force -EA SilentlyContinue -Verbose
         Remove-Item -path "C:\Users\$($_.Name)\AppData\Local\SquirrelTemp" -Recurse -Force -EA SilentlyContinue -Verbose
-	    Remove-Item -path "C:\Users\$($_.Name)\AppData\Local\Cisco" -Recurse -Force -EA SilentlyContinue -Verbose
+	Remove-Item -path "C:\Users\$($_.Name)\AppData\Local\Cisco" -Recurse -Force -EA SilentlyContinue -Verbose
         Remove-Item -path "C:\Users\$($_.Name)\AppData\Local\Webex" -Recurse -Force -EA SilentlyContinue -Verbose
         Remove-Item -path "C:\Users\$($_.Name)\AppData\Local\Microsoft\Windows Mail" -Recurse -Force -EA SilentlyContinue -Verbose
         Remove-Item -path "C:\Users\$($_.Name)\AppData\Local\Microsoft\Windows Media" -Recurse -Force -EA SilentlyContinue -Verbose
@@ -96,16 +110,14 @@ if ($list) {
         Remove-Item -path "C:\Users\$($_.Name)\AppData\Local\Microsoft\Windows\WebCache\*" -Recurse -Force -EA SilentlyContinue -Verbose
         Remove-Item -path "C:\Users\$($_.Name)\AppData\Local\Temp\*" -Recurse -Force -EA SilentlyContinue -Verbose
         Remove-Item -path "C:\Users\$($_.Name)\AppData\Local\Microsoft\Windows\WER\*" -Recurse -Force -EA SilentlyContinue -Verbose
-        Remove-Item -path "C:\Windows\Temp\*" -Recurse -Force -EA SilentlyContinue -Verbose
-	    Remove-Item -path "C:\`$recycle.bin\" -Recurse -Force -EA SilentlyContinue -Verbose
         
         #Temp files with time delay
-        Get-ChildItem -path "C:\Temp\*" -Recurse -EA SilentlyContinue | Where-Object {($_.LastWriteTime -lt (Get-Date).AddDays(-30))} | Remove-Item -Recurse -Force -EA SilentlyContinue -Verbose
         Get-ChildItem -path "C:\Users\$($_.Name)\AppData\Local\Microsoft\Internet Explorer\Recovery\*" -Recurse -EA SilentlyContinue | Where-Object {($_.LastWriteTime -lt (Get-Date).AddDays(-1))} | Remove-Item -Recurse -Force -EA SilentlyContinue -Verbose
-	    Get-ChildItem -path "C:\Users\$($_.Name)\AppData\Local\Microsoft\Terminal Server Client\Cache\*" -Recurse -EA SilentlyContinue | Where-Object {($_.LastWriteTime -lt (Get-Date).AddDays(-2))} | Remove-Item -Recurse -Force -EA SilentlyContinue -Verbose        
+	Get-ChildItem -path "C:\Users\$($_.Name)\AppData\Local\Microsoft\Terminal Server Client\Cache\*" -Recurse -EA SilentlyContinue | Where-Object {($_.LastWriteTime -lt (Get-Date).AddDays(-2))} | Remove-Item -Recurse -Force -EA SilentlyContinue -Verbose
+        Get-ChildItem -path "C:\Users\$($_.Name)AppData\Local\Microsoft\Internet Explorer\Indexed DB\*" -Recurse -EA SilentlyContinue | Where-Object {($_.LastWriteTime -lt (Get-Date).AddDays(-1))} | Remove-Item -Recurse -Force -EA SilentlyContinue -Verbose        
                
-        #Parallels logs - 6 months delayed
-        Get-ChildItem -path "C:\ProgramData\Parallels\RASLogs\univprn_*.log" -EA SilentlyContinue | Where-Object {($_.LastWriteTime -lt (Get-Date).AddDays(-180))} | Remove-Item -Force -EA SilentlyContinue -Verbose
+        #Downloads older than 5 days
+        Get-ChildItem "C:\Users\$($_.Name)\Downloads\*" -Recurse -EA SilentlyContinue | Where-Object {($_.LastWriteTime -lt (Get-Date).AddDays(-5))} | Remove-Item -Recurse -Force -EA SilentlyContinue -Verbose
             
             }
     Write-Host -ForegroundColor yellow "Done..."
