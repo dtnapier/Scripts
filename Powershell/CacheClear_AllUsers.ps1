@@ -59,7 +59,7 @@ if ($list) {
     Import-CSV -Path C:\users\$env:USERNAME\users.csv -Header Name | foreach {
             Remove-Item -path C:\Users\$($_.Name)\AppData\Local\Mozilla\Firefox\Profiles\*.default\cache\* -Recurse -Force -EA SilentlyContinue -Verbose
             Remove-Item -path C:\Users\$($_.Name)\AppData\Local\Mozilla\Firefox\Profiles\*.default\cache\*.* -Recurse -Force -EA SilentlyContinue -Verbose
-	    Remove-Item -path C:\Users\$($_.Name)\AppData\Local\Mozilla\Firefox\Profiles\*.default\cache2\entries\*.* -Recurse -Force -EA SilentlyContinue -Verbose
+	        Remove-Item -path C:\Users\$($_.Name)\AppData\Local\Mozilla\Firefox\Profiles\*.default\cache2\entries\*.* -Recurse -Force -EA SilentlyContinue -Verbose
             Remove-Item -path C:\Users\$($_.Name)\AppData\Local\Mozilla\Firefox\Profiles\*.default\thumbnails\* -Recurse -Force -EA SilentlyContinue -Verbose
             Remove-Item -path C:\Users\$($_.Name)\AppData\Local\Mozilla\Firefox\Profiles\*.default\cookies.sqlite -Recurse -Force -EA SilentlyContinue -Verbose
             Remove-Item -path C:\Users\$($_.Name)\AppData\Local\Mozilla\Firefox\Profiles\*.default\webappsstore.sqlite -Recurse -Force -EA SilentlyContinue -Verbose
@@ -97,10 +97,10 @@ if ($list) {
 
         #Defunct folders and programs
         Remove-Item -path "C:\Users\$($_.Name)\AppData\Local\Microsoft\Teams" -Recurse -Force -EA SilentlyContinue -Verbose
-	Remove-Item -path "C:\Users\$($_.Name)\AppData\Local\Microsoft\TeamsMeetingAddin" -Recurse -Force -EA SilentlyContinue -Verbose
+	    Remove-Item -path "C:\Users\$($_.Name)\AppData\Local\Microsoft\TeamsMeetingAddin" -Recurse -Force -EA SilentlyContinue -Verbose
         Remove-Item -path "C:\Users\$($_.Name)\AppData\Local\Microsoft\TeamsPresenceAddin" -Recurse -Force -EA SilentlyContinue -Verbose
         Remove-Item -path "C:\Users\$($_.Name)\AppData\Local\SquirrelTemp" -Recurse -Force -EA SilentlyContinue -Verbose
-	Remove-Item -path "C:\Users\$($_.Name)\AppData\Local\Cisco" -Recurse -Force -EA SilentlyContinue -Verbose
+	    Remove-Item -path "C:\Users\$($_.Name)\AppData\Local\Cisco" -Recurse -Force -EA SilentlyContinue -Verbose
         Remove-Item -path "C:\Users\$($_.Name)\AppData\Local\Webex" -Recurse -Force -EA SilentlyContinue -Verbose
         Remove-Item -path "C:\Users\$($_.Name)\AppData\Local\Microsoft\Windows Mail" -Recurse -Force -EA SilentlyContinue -Verbose
         Remove-Item -path "C:\Users\$($_.Name)\AppData\Local\Microsoft\Windows Media" -Recurse -Force -EA SilentlyContinue -Verbose
@@ -113,8 +113,8 @@ if ($list) {
         
         #Temp files with time delay
         Get-ChildItem -path "C:\Users\$($_.Name)\AppData\Local\Microsoft\Internet Explorer\Recovery\*" -Recurse -EA SilentlyContinue | Where-Object {($_.LastWriteTime -lt (Get-Date).AddDays(-1))} | Remove-Item -Recurse -Force -EA SilentlyContinue -Verbose
-	Get-ChildItem -path "C:\Users\$($_.Name)\AppData\Local\Microsoft\Terminal Server Client\Cache\*" -Recurse -EA SilentlyContinue | Where-Object {($_.LastWriteTime -lt (Get-Date).AddDays(-2))} | Remove-Item -Recurse -Force -EA SilentlyContinue -Verbose
-        Get-ChildItem -path "C:\Users\$($_.Name)AppData\Local\Microsoft\Internet Explorer\Indexed DB\*" -Recurse -EA SilentlyContinue | Where-Object {($_.LastWriteTime -lt (Get-Date).AddDays(-1))} | Remove-Item -Recurse -Force -EA SilentlyContinue -Verbose        
+	    Get-ChildItem -path "C:\Users\$($_.Name)\AppData\Local\Microsoft\Terminal Server Client\Cache\*" -Recurse -EA SilentlyContinue | Where-Object {($_.LastWriteTime -lt (Get-Date).AddDays(-2))} | Remove-Item -Recurse -Force -EA SilentlyContinue -Verbose
+        Get-ChildItem -path "C:\Users\$($_.Name)\AppData\Local\Microsoft\Internet Explorer\Indexed DB\*" -Recurse -EA SilentlyContinue | Where-Object {($_.LastWriteTime -lt (Get-Date).AddDays(-1))} | Remove-Item -Recurse -Force -EA SilentlyContinue -Verbose        
                
         #Downloads older than 5 days
         Get-ChildItem "C:\Users\$($_.Name)\Downloads\*" -Recurse -EA SilentlyContinue | Where-Object {($_.LastWriteTime -lt (Get-Date).AddDays(-5))} | Remove-Item -Recurse -Force -EA SilentlyContinue -Verbose
