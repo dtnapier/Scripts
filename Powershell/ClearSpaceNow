@@ -46,9 +46,9 @@ if ($list) {
         #Temp files that would affect current sessions if deleted while in use
         Get-ChildItem -path "C:\Users\$($_.Name)\AppData\Local\Temp\*" -Recurse -EA SilentlyContinue | Where-Object {($_.LastWriteTime -lt (Get-Date).AddDays(-2))} | Remove-Item -Recurse -Force -EA SilentlyContinue -Verbose 
         Get-ChildItem -path "C:\Users\$($_.Name)\AppData\Local\Microsoft\Internet Explorer\Recovery\*" -Recurse -EA SilentlyContinue | Where-Object {($_.LastWriteTime -lt (Get-Date).AddDays(-1))} | Remove-Item -Recurse -Force -EA SilentlyContinue -Verbose
-        Get-ChildItem -path "C:\Users\$($_.Name)AppData\Local\Microsoft\Internet Explorer\Indexed DB\*" -Recurse -EA SilentlyContinue | Where-Object {($_.LastWriteTime -lt (Get-Date).AddDays(-1))} | Remove-Item -Recurse -Force -EA SilentlyContinue -Verbose 
+        Get-ChildItem -path "C:\Users\$($_.Name)\AppData\Local\Microsoft\Internet Explorer\Indexed DB\*" -Recurse -EA SilentlyContinue | Where-Object {($_.LastWriteTime -lt (Get-Date).AddDays(-1))} | Remove-Item -Recurse -Force -EA SilentlyContinue -Verbose 
         Get-ChildItem -path "C:\Users\$($_.Name)\AppData\Local\Microsoft\Windows\WebCache\*" -Recurse -EA SilentlyContinue | Where-Object {($_.LastWriteTime -lt (Get-Date).AddDays(-1))} | Remove-Item -Recurse -Force -EA SilentlyContinue -Verbose        
-        Get-ChildItem -path "C:\Users\$($_.Name)\AppData\Local\Microsoft\Terminal Server Client\Cache\*" -Recurse -EA SilentlyContinue | Where-Object {($_.LastWriteTime -lt (Get-Date).AddDays(-1))} | Remove-Item -Recurse -Force -EA SilentlyContinue -Verbose        
+        Get-ChildItem -path "C:\Users\$($_.Name)\AppData\Local\Microsoft\Terminal Server Client\Cache\*" -Recurse -EA SilentlyContinue | Where-Object {($_.LastWriteTime -lt (Get-Date).AddDays(-1))} | Remove-Item -Recurse -Force -EA SilentlyContinue -Verbose       
         
         
         #Temp files that can be cleared without regard to current use
