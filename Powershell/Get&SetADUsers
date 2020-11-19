@@ -1,0 +1,13 @@
+#Gets the users in a CSV
+Get-ADUser -Filter * -Properties * | 
+Select-Object Enabled, name, telephoneNumber, Description, Title, Department, Company, @{n='Manager';e={(Get-ADUser $_.manager).name}} | 
+export-csv -path c:\temp\userexport.csv
+
+#Sets 1 attribute for 1 user
+get-ADUser -Filter "Name -eq 'Tyler Napier'" |
+set-aduser -Company "The Retirement Plan Company, LLC"
+
+$users = Import-Csv -Path C:\temp\users.csv                     
+foreach ($user in $users) 
+{Get-ADUser -Filter "SamAccountName -eq '$($user.samaccountname)'" | 
+Set-ADUser -Company "The Retirement Plan Company, LLC"}}

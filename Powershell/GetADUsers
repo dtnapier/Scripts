@@ -1,3 +1,0 @@
-Get-ADUser -Filter * -Properties * | 
-Select-Object Enabled, name, telephoneNumber, Description, Title, Department, Company, @{n='Manager';e={(Get-ADUser $_.manager).name}} | 
-export-csv -path c:\temp\userexport.csv
