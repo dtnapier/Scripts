@@ -1,0 +1,19 @@
+function fcopy ($SourceDir,$DestinationDir)
+{
+   $date = (get-date).AddDays(-549)
+	Get-ChildItem $SourceDir *.pdf -Recurse | Where-Object { $_.LastWriteTime -gt $date } | ForEach-Object ($_) {
+		$SourceFile = $_.FullName
+		$DestinationFile = $DestinationDir + $_
+		if (Test-Path $DestinationFile) {
+			$i = 0
+			while (Test-Path $DestinationFile) {
+				$i += 1
+				$DestinationFile = $_.basename + $i + $_.extension
+			}
+		} else {
+			Copy-Item -Path $SourceFile -Destination $DestinationFile -Force
+		}
+		Copy-Item -Path $SourceFile -Destination $DestinationFile -Force
+	}
+}
+fcopy -SourceDir "K:\EMPBEN\PROPOSAL\__PROPOSALS" -DestinationDir "K:\EMPBEN\PROPOSAL\__PROPOSALS\zPDFs - 090119-030321\"
