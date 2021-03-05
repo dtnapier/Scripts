@@ -18,3 +18,22 @@ $users = Import-Csv -Path C:\temp\users.csv
 foreach ($user in $users) 
 {Get-ADUser -Filter "SamAccountName -eq '$($user.samaccountname)'" | 
 Set-ADUser -Company "The Retirement Plan Company, LLC"}}
+
+#Check for Disabled users and change ExtAtt15 if it's not changed already
+$ous = 'OU=Users,OU=Brentwood,DC=trpcweb,DC=com','OU=Users,OU=Chennai,OU=India,DC=trpcweb,DC=com','OU=Users,OU=Delhi,OU=India,DC=trpcweb,DC=com','OU=Users,OU=Remote Users,DC=trpcweb,DC=com'
+ForEach ($ou in $ous) { 
+$disabled = Get-ADUser -Filter * -SearchBase $ou | Where-Object {$_.Enabled -like “false”}
+foreach ($user in $disabled) {
+    $extatt15 = Get-ADUser -Identity $user.samaccountname -Properties * | select -expand extensionattribute15
+    if ($extatt15 -eq "ACTIVE")
+        {
+        set-aduser -Identity $user.samaccountname -clear "extensionAttribute15"
+        set-aduser -Identity $user.samaccountname -Replace @{'extensionAttribute15' = "TERMINATED"}
+        }
+    elseif (!$extatt15)
+        {
+        set-aduser -Identity $user.samaccountname -clear "extensionAttribute15"
+        set-aduser -Identity $user.samaccountname -Replace @{'extensionAttribute15' = "TERMINATED"}
+        }  
+    }
+   }
