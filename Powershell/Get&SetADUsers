@@ -6,6 +6,10 @@ export-csv -path c:\temp\userexport.csv
 #By OU
 Get-ADUser -Filter * -SearchBase 'OU=Gurgaon,OU=India,DC=trpcweb,DC=Com'
 
+#Multiple OUs
+$ous = 'OU=Test 1,DC=domain,DC=com','OU=Test 2,DC=domain,DC=com'
+$ous | ForEach { Get-ADUser -Filter * -SearchBase $_ }
+
 #Sets 1 attribute for 1 user
 get-ADUser -Filter "Name -eq 'Tyler Napier'" |
 set-aduser -Company "The Retirement Plan Company, LLC"
