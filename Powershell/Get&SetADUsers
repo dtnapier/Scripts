@@ -3,6 +3,9 @@ Get-ADUser -Filter * -Properties * |
 Select-Object Enabled, name, telephoneNumber, Description, Title, Department, Company, @{n='Manager';e={(Get-ADUser $_.manager).name}} | 
 export-csv -path c:\temp\userexport.csv
 
+#By OU
+Get-ADUser -Filter * -SearchBase 'OU=Gurgaon,OU=India,DC=trpcweb,DC=Com'
+
 #Sets 1 attribute for 1 user
 get-ADUser -Filter "Name -eq 'Tyler Napier'" |
 set-aduser -Company "The Retirement Plan Company, LLC"
