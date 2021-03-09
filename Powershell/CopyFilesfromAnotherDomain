@@ -1,0 +1,28 @@
+## Get and save credentials
+#$credential = Get-Credential
+#$credential | Export-CliXml -Path 'C:\Scripts\InghamOpercred.xml'
+
+#Logging
+Start-Transcript -path C:\IT\Ingham_Transfer.txt -append
+
+#Import Credentials
+$credential = Import-CliXml -Path 'C:\Scripts\InghamOpercred.xml'
+
+#Create Variables for file locations
+$FromInghamtoIndia = "\\nas\l_drive\Data\2021\2021 Raw Files\To_India"
+$FromIndiatoIngham = "\\trpcfs1\clients\Ingham\Payroll Files\To_Ingham"
+$FromIndia = "\\nas\l_drive\Data\2021\Invest 2021\From_India"
+$FromIngham = "\\trpcfs1\clients\Ingham\Payroll Files\From_Ingham"
+
+#Create PSDrive on Ingham's File Server for outgoing to India, set location, move files, remove drive
+New-PSDrive -Name X -PSProvider FileSystem -Root $FromInghamtoIndia -Credential $credential
+Set-Location X:\
+Get-ChildItem | Move-Item -Destination $FromIngham -Verbose
+
+New-PSDrive -Name Y -PSProvider FileSystem -Root $FromIndia -Credential $credential
+Set-Location $FromIndiatoIngham
+Get-ChildItem | Move-Item -Destination Y:\ -Verbose
+
+Sleep 10
+Remove-PSDrive X
+Remove-PSDrive Y
