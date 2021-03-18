@@ -1,0 +1,20 @@
+$Domain="@trpcweb.com"
+$UserOu="OU=Ingham,OU=Remote Users,DC=trpcweb,DC=com"
+$NewUsersList=Import-CSV "C:\Temp\NewADUsers.csv"
+ForEach ($User in $NewUsersList) {
+    $FullName=$User.Name
+    $givenName=$User.GivenName
+    $sn=$User.Surname
+    $sAMAccountName=$User.SamAccountName
+    $userPassword=$User.Password
+    $userOffice=$User.Office
+    $Company=$User.Company
+    $Description=$User.Description
+    $userPrincipalName=$User.sAMAccountName+$Domain
+    $expire=$null
+
+    New-ADUser -Path $UserOU -Enabled $True -ChangePasswordAtLogon $True -AccountPassword (ConvertTo-SecureString $userPassword -AsPlainText -Force) -CannotChangePassword $False -Description $Description -Office $UserOffice -Company $Company -DisplayName $FullName -GivenName $givenName -Name $FullName -SamAccountName $sAMAccountName -Surname $sn -UserPrincipalName $userPrincipalName
+    #Get-ADUser $sAMAccountName| Move-ADObject -TargetPath 'OU=Ingham,OU=Remote Users,DC=trpcweb,DC=com'
+    Add-ADGroupMember -Identity "Ingham Users" -Members $User.SamAccountName
+    Add-ADGroupMember -Identity "Terminal Server Users" -Members $sAMAccountName
+    }
