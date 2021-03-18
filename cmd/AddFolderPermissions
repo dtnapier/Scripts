@@ -1,0 +1,7 @@
+takeown /f \\trpcfs1\clients\New_Client /r
+
+cacls \\trpcfs1\clients\New_Client /e /r everyone
+
+cacls \\trpcfs1\clients\New_Client /e /g "Omni360 users":f
+
+cacls \\trpcfs1\clients\New_Client /e /g tnapier:f
