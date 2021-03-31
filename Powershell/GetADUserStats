@@ -1,0 +1,187 @@
+#https://theitbros.com/powershell-gui-for-scripts/
+
+Add-Type -assembly System.Windows.Forms
+
+$main_form = New-Object System.Windows.Forms.Form
+$main_form.Text ='GUI for my PoSh script'
+$main_form.Width = 600
+$main_form.Height = 40
+$main_form.AutoSize = $true
+
+$Label = New-Object System.Windows.Forms.Label
+$Label.Text = "AD users"
+$Label.Location  = New-Object System.Drawing.Point(0,10)
+$Label.AutoSize = $true
+$main_form.Controls.Add($Label)
+
+$ComboBox = New-Object System.Windows.Forms.ComboBox
+$ComboBox.Width = 300
+$ComboBox.Location  = New-Object System.Drawing.Point(100,10)
+$ous = 'OU=Users,OU=Brentwood,DC=trpcweb,DC=com','OU=Users,OU=Chennai,OU=India,DC=trpcweb,DC=com','OU=Users,OU=Delhi,OU=India,DC=trpcweb,DC=com','OU=Users,OU=Remote Users,DC=trpcweb,DC=com','OU=Ingham,OU=Remote Users,DC=trpcweb,DC=com','OU=USES,OU=Remote Users,DC=trpcweb,DC=com','OU=Clients,DC=trpcweb,DC=com'
+$Users = $ous| ForEach { Get-ADUser -Server TRPCDC1 -Filter * -SearchBase $_} | sort-object samaccountname
+Foreach ($User in $Users){
+$ComboBox.Items.Add($User.SamAccountName);}
+$main_form.Controls.Add($ComboBox)
+
+<#$Button1 = New-Object System.Windows.Forms.Button
+$Button1.Location = New-Object System.Drawing.Size(0,10)
+$Button1.Size = New-Object System.Drawing.Size(95,20)
+$Button1.Text = "Get AD Users"
+$main_form.Controls.Add($Button1)
+$Button1.Add_Click({
+$ous = 'OU=Users,OU=Brentwood,DC=trpcweb,DC=com','OU=Users,OU=Chennai,OU=India,DC=trpcweb,DC=com','OU=Users,OU=Delhi,OU=India,DC=trpcweb,DC=com','OU=Users,OU=Remote Users,DC=trpcweb,DC=com','OU=Ingham,OU=Remote Users,DC=trpcweb,DC=com','OU=USES,OU=Remote Users,DC=trpcweb,DC=com','OU=Clients,DC=trpcweb,DC=com'
+$Users = $ous| ForEach { Get-ADUser -Server TRPCDC1 -Filter * -SearchBase $_} | sort-object samaccountname
+Foreach ($User in $Users){
+$ComboBox.Items.Add($User.SamAccountName);}
+})#>
+
+$Label2 = New-Object System.Windows.Forms.Label
+$Label2.Text = "Password Last Set:"
+$Label2.Location  = New-Object System.Drawing.Point(0,40)
+$Label2.AutoSize = $true
+$main_form.Controls.Add($Label2)
+$Label3 = New-Object System.Windows.Forms.Label
+$Label3.Text = ""
+$Label3.Location  = New-Object System.Drawing.Point(150,40)
+$Label3.AutoSize = $true
+$main_form.Controls.Add($Label3)
+
+$Label4 = New-Object System.Windows.Forms.Label
+$Label4.Text = "Password Expires:"
+$Label4.Location  = New-Object System.Drawing.Point(0,60)
+$Label4.AutoSize = $true
+$main_form.Controls.Add($Label4)
+$Label5 = New-Object System.Windows.Forms.Label
+$Label5.Text = ""
+$Label5.Location  = New-Object System.Drawing.Point(150,60)
+$Label5.AutoSize = $true
+$main_form.Controls.Add($Label5)
+
+$Label6 = New-Object System.Windows.Forms.Label
+$Label6.Text = "Last Bad Password Time:"
+$Label6.Location  = New-Object System.Drawing.Point(0,80)
+$Label6.AutoSize = $true
+$main_form.Controls.Add($Label6)
+$Label7 = New-Object System.Windows.Forms.Label
+$Label7.Text = ""
+$Label7.Location  = New-Object System.Drawing.Point(150,80)
+$Label7.AutoSize = $true
+$main_form.Controls.Add($Label7)
+
+$Label8 = New-Object System.Windows.Forms.Label
+$Label8.Text = "Bad Password Count:"
+$Label8.Location  = New-Object System.Drawing.Point(0,100)
+$Label8.AutoSize = $true
+$main_form.Controls.Add($Label8)
+$Label9 = New-Object System.Windows.Forms.Label
+$Label9.Text = ""
+$Label9.Location  = New-Object System.Drawing.Point(150,100)
+$Label9.AutoSize = $true
+$main_form.Controls.Add($Label9)
+
+$Label10 = New-Object System.Windows.Forms.Label
+$Label10.Text = "Account Lockout Time:"
+$Label10.Location  = New-Object System.Drawing.Point(0,120)
+$Label10.AutoSize = $true
+$main_form.Controls.Add($Label10)
+$Label11 = New-Object System.Windows.Forms.Label
+$Label11.Text = ""
+$Label11.Location  = New-Object System.Drawing.Point(150,120)
+$Label11.AutoSize = $true
+$main_form.Controls.Add($Label11)
+
+$Label12 = New-Object System.Windows.Forms.Label
+$Label12.Text = "Locked Out?:"
+$Label12.Location  = New-Object System.Drawing.Point(0,140)
+$Label12.AutoSize = $true
+$main_form.Controls.Add($Label12)
+$Label13 = New-Object System.Windows.Forms.Label
+$Label13.Text = ""
+$Label13.Location  = New-Object System.Drawing.Point(150,140)
+$Label13.AutoSize = $true
+$main_form.Controls.Add($Label13)
+
+$Label14 = New-Object System.Windows.Forms.Label
+$Label14.Text = "Last Logon Date:"
+$Label14.Location  = New-Object System.Drawing.Point(0,160)
+$Label14.AutoSize = $true
+$main_form.Controls.Add($Label14)
+$Label15 = New-Object System.Windows.Forms.Label
+$Label15.Text = ""
+$Label15.Location  = New-Object System.Drawing.Point(150,160)
+$Label15.AutoSize = $true
+$main_form.Controls.Add($Label15)
+
+<# Output Box which is below all other buttons #>
+$outputBox = New-Object System.Windows.Forms.TextBox 
+$outputBox.Location = New-Object System.Drawing.Size(10,200) 
+$outputBox.Size = New-Object System.Drawing.Size(565,350) 
+$outputBox.MultiLine = $True 
+$outputBox.ScrollBars = "Vertical"
+$main_form.Controls.Add($outputBox)
+
+Function Refresh-OutputBox {
+    Param ($Message)
+    $OutputBox.AppendText("`r`n$Message")
+    $OutputBox.Refresh()
+    $OutputBox.ScrollToCaret()
+}
+
+#Clear Button
+$ClearButton = New-Object “System.Windows.Forms.Button”;
+$ClearButton.Location = New-Object System.Drawing.Size(530,170)
+$ClearButton.Size = New-Object System.Drawing.Size(122,22)
+$ClearButton.Text = "Clear Output"
+$ClearButton.Add_Click{$outputBox.Clear()}
+$main_Form.Controls.Add($ClearButton)
+
+$Button2 = New-Object System.Windows.Forms.Button
+$Button2.Location = New-Object System.Drawing.Size(400,10)
+$Button2.Size = New-Object System.Drawing.Size(120,22)
+$Button2.Text = "Check Selected User"
+$main_form.Controls.Add($Button2)
+
+$Button2.Add_Click({
+$selectedUser = Get-ADUser -Server TRPCDC1 -identity $ComboBox.selectedItem -Properties *
+$Label3.Text = ($selectedUser).PasswordLastSet
+$Label5.Text = [datetime]::FromFileTime((Get-ADUser -identity $ComboBox.selectedItem -Properties "msDS-UserPasswordExpiryTimeComputed")."msDS-UserPasswordExpiryTimeComputed")
+$Label7.Text = ($selectedUser).LastBadPasswordAttempt
+$Label9.Text = ($selectedUser).badlogoncount
+$Label11.Text = ($selectedUser).accountlockouttime
+$Label13.Text = ($selectedUser).lockedout
+$Label15.Text = ($selectedUser).LastLogonDate
+$NetUser = net user /domain $ComboBox.selectedItem | Out-String
+Refresh-OutputBox -Message $NetUser
+})
+
+$Button3 = New-Object System.Windows.Forms.Button
+$Button3.Location = New-Object System.Drawing.Size(530,10)
+$Button3.Size = New-Object System.Drawing.Size(122,22)
+$Button3.Text = "Unlock Selected User"
+$main_form.Controls.Add($Button3)
+
+$Button3.Add_Click({
+$selectedUser = Get-ADUser -Server TRPCDC1 -identity $ComboBox.selectedItem -Properties *
+$selectedUser | Unlock-ADAccount
+$Label3.Text = ($selectedUser).PasswordLastSet
+$Label5.Text = [datetime]::FromFileTime((Get-ADUser -identity $ComboBox.selectedItem -Properties "msDS-UserPasswordExpiryTimeComputed")."msDS-UserPasswordExpiryTimeComputed")
+$Label7.Text = ($selectedUser).LastBadPasswordAttempt
+$Label9.Text = ($selectedUser).badlogoncount
+$Label11.Text = ($selectedUser).accountlockouttime
+$Label13.Text = ($selectedUser).lockedout
+$Label15.Text = ($selectedUser).LastLogonDate
+})
+
+$Button4 = New-Object System.Windows.Forms.Button
+$Button4.Location = New-Object System.Drawing.Size(530,40)
+$Button4.Size = New-Object System.Drawing.Size(122,22)
+$Button4.Text = "Show All Lockouts"
+$main_form.Controls.Add($Button4)
+
+$Button4.Add_Click({
+$lockouts = Search-ADAccount -Server "trpcdc1" -LockedOut | select-object samaccountname | Out-String
+Refresh-OutputBox -Message $lockouts
+})
+
+
+$main_form.ShowDialog()
