@@ -19,6 +19,12 @@ foreach ($user in $users)
 {Get-ADUser -Filter "SamAccountName -eq '$($user.samaccountname)'" | 
 Set-ADUser -Company "The Retirement Plan Company, LLC"}}
 
+#For an entire OU & ExtensionAttribute
+$ou = 'CN=Users,DC=ingham,DC=com'
+$users = Get-ADUser -Filter  * -SearchBase $ou
+foreach ($user in $users) {
+Set-ADUser -identity $user.samaccountname -Replace @{'extensionAttribute14' = "STANDARD"}}
+
 #Check for Disabled users and change ExtAtt15 if it's not changed already
 $ous = 'OU=Users,OU=Brentwood,DC=trpcweb,DC=com','OU=Users,OU=Chennai,OU=India,DC=trpcweb,DC=com','OU=Users,OU=Delhi,OU=India,DC=trpcweb,DC=com','OU=Users,OU=Remote Users,DC=trpcweb,DC=com'
 ForEach ($ou in $ous) { 
