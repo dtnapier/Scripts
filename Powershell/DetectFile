@@ -23,3 +23,37 @@ try {
 } catch {
 	Write-Output "Issues occured while attempting to detect $SystemFile : $($_.Exception.Message)"; exit 1
 }
+
+
+
+##Faster version
+
+
+$SystemFile = "dbutil_2_3.sys"
+
+$Profiles=(Get-WmiObject win32_userprofile).LocalPath
+$ProfileDirs=@()
+foreach ($profile in $profiles){
+    $ProfileDirs +="$profile\AppData\Local\Temp\dbutil_2_3.sys"
+}
+
+$i = 0
+foreach ($ProfileDir in $ProfileDirs){
+    if (Test-Path $ProfileDir -ErrorAction SilentlyContinue) {
+       $i += 1 
+       }
+}
+if ($i -gt 0) {
+    $UserProfileSearch = $true
+}
+
+$TempSearch = (Get-ChildItem -Path C:\Windows\Temp -Filter $SystemFile -Recurse -ErrorAction SilentlyContinue)
+try {
+	if ([boolean]$UserProfileSearch -eq $true -or [boolean]$TempSearch -eq $true) {
+		Write-Output "Dell dbutil_2_3.sys file has been detected"; exit 1
+	} else {
+		Write-Output "Dell dbutil_2_3.sys file not present on system"; exit 0
+	}
+} catch {
+	Write-Output "Issues occured while attempting to detect $SystemFile : $($_.Exception.Message)"; exit 2
+}
