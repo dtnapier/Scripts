@@ -1,0 +1,222 @@
+<#  
+
+AUTHOR: Kris Powell, Admin Arsenal
+DATE: 4/27/2016
+
+This will attempt to forcibly remove all per-user Mozille Firefox installations
+Please test in your environments before rolling out for production.
+
+Tested with Powershell v4
+
+#>
+
+$PatternSID = 'S-1-5-21-\d+-\d+\-\d+\-\d+$'
+$UserProfilesDirectory = (gp 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList\').ProfilesDirectory
+$NotInstalled = @()
+
+# Get all profiles on the machine
+$ProfileList = gp 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList\*' | ? {$_.PSChildName -match $PatternSID} | select  @{name="SID";expression={$_.PSChildName}}, @{name="UserHive";expression={"$($_.ProfileImagePath)\ntuser.dat"}}, @{name="Username";expression={$_.ProfileImagePath -replace '^(.*[\\\/])', ''}}
+
+# Get all users found in HKEY_USERS
+$LoadedHives = gci Registry::HKEY_USERS | ? {$_.PSChildname -match $PatternSID} | select @{name="SID";expression={$_.PSChildName}}
+
+# Get all users not found in HKEY_USERS
+$UnloadedHives = Compare-Object $ProfileList.SID $LoadedHives.SID | select @{name="SID";expression={$_.InputObject}}, UserHive, Username
+
+Foreach ($item in $ProfileList) {
+    # Load Local User Hives
+    IF ($item.SID -in $UnloadedHives.SID) {reg load HKU\$($Item.SID) $($Item.UserHive) | Out-Null}
+
+    $Installs = @()
+    $Installs += gp registry::HKEY_USERS\$($Item.SID)\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\* -ErrorAction SilentlyContinue | ? {$_.DisplayName -like "Mozilla Firefox*"}
+    $Installs += gp registry::HKEY_USERS\$($Item.SID)\Software\Microsoft\Windows\CurrentVersion\Uninstall\* -ErrorAction SilentlyContinue | ? {$_.DisplayName -like "Mozilla Firefox*"} 
+    
+    If (!($Installs)) {
+        $NotInstalled += $($item.Username)
+    } Else {
+        "{0}" -f $($item.Username), "Firefox install found" | Write-Output
+        $Installs | ? {$_} | % {
+            $UninstallString = "$($_.UninstallString) -ms"
+            $FilePath  = $UninstallString | % {$_.split('"')[1]}
+            $Arguments = $UninstallString | % {$_.split('"')[2]}
+
+            "{0,-15} {1}" -f "   Program:", $($_.DisplayName) | Write-Output
+            "{0,-15} {1}" -f "   Uninstall:", $UninstallString | Write-Output
+            "{0,-15} {1}" -f "   helper.exe?", $(test-path $FilePath) | Write-output
+            If (Test-path $FilePath) {
+                "   Beginning uninstall of Mozilla Firefox...   Start-Process -FilePath $FilePath -ArgumentList $Arguments -Wait" | Write-Output
+                Start-Process -FilePath $FilePath -ArgumentList $Arguments -Wait
+            } else {
+                "   Beginning cleanup of Mozilla Firefox..."
+            }
+            $UninstallKey = (gci $_.PSParentPath | ? {($_ | gp).DisplayName -like "Mozilla Firefox*"}).pspath
+        }
+
+        ### Remove all Firefox traces ###
+        $DesktopIcon    = "$userprofilesdirectory\$($Item.Username)\Desktop\Mozilla Firefox.lnk"
+        $StartMenuIcon  = "$userprofilesdirectory\$($Item.Username)\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Mozilla Firefox.lnk"
+        $TaskbarIcon    = "$userprofilesdirectory\$($Item.Username)\AppData\Roaming\Microsoft\Internet Explorer\Quick Launch\User Pinned\TaskBar\Mozilla Firefox.lnk"
+        $FirefoxRegKey  = "registry::HKEY_USERS\$($Item.SID)\Software\Mozilla\*Firefox*"
+        $FirefoxAppPath = "registry::HKEY_USERS\$($Item.SID)\Software\Microsoft\Windows\CurrentVersion\App Paths\firefox.exe"
+        $FirefoxData = @($DesktopIcon, $StartMenuIcon, $TaskbarIcon, $FirefoxRegKey, $FirefoxAppPath, $UninstallKey)
+        $FirefoxData | % {If (Test-Path $_) {"{0,-18} {1}" -f "      Deleting...", $_; Remove-Item $_ -Force -Recurse}}
+        
+        Write-Output ""
+    }
+    IF ($item.SID -in $UnloadedHives.SID) {
+        ### Garbage collection and closing of hive ###
+        [gc]::Collect()
+        reg unload HKU\$($Item.SID) | Out-Null
+    }
+}
+
+$NotInstalled | Sort | % {"{1} {0}" -f $_, "No Firefox found:" | Write-Output}
+# SIG # Begin signature block
+# MIIbagYJKoZIhvcNAQcCoIIbWzCCG1cCAQExDzANBglghkgBZQMEAgEFADB5Bgor
+# BgEEAYI3AgEEoGswaTA0BgorBgEEAYI3AgEeMCYCAwEAAAQQH8w7YFlLCE63JNLG
+# KX7zUQIBAAIBAAIBAAIBAAIBADAxMA0GCWCGSAFlAwQCAQUABCAr7ZqKpLE3RllE
+# JeK2GW3H84zIALjSaZnsU7Gd+I5j06CCCjowggTZMIIDwaADAgECAhB333Q9blgq
+# lN8VYTchtwybMA0GCSqGSIb3DQEBCwUAMH8xCzAJBgNVBAYTAlVTMR0wGwYDVQQK
+# ExRTeW1hbnRlYyBDb3Jwb3JhdGlvbjEfMB0GA1UECxMWU3ltYW50ZWMgVHJ1c3Qg
+# TmV0d29yazEwMC4GA1UEAxMnU3ltYW50ZWMgQ2xhc3MgMyBTSEEyNTYgQ29kZSBT
+# aWduaW5nIENBMB4XDTE3MDkxMzAwMDAwMFoXDTE5MTAxODIzNTk1OVowcTELMAkG
+# A1UEBhMCVVMxDTALBgNVBAgMBFV0YWgxFzAVBgNVBAcMDlNhbHQgTGFrZSBDaXR5
+# MRwwGgYDVQQKDBNQRFEuQ09NIENPUlBPUkFUSU9OMRwwGgYDVQQDDBNQRFEuQ09N
+# IENPUlBPUkFUSU9OMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAya0x
+# 1zSpBpjBsUJOY/rJf0LX2K641qXiH82Lz0wRlrvt/y5saQDvYbiz8IAXLNsKcfWt
+# IxZfwCiuDa4RudN2RJePcpyZ0Dd8/f1O1X8bvGMqwLmaSzi8jqglqu2/+r0Z8ANO
+# 842yT+fj9MlBx7gOFQY6X6oBxQY4JJy0TljZKBfRDQBT0TNaPLTAKW+6D2AkY7HD
+# UDa4bplf7npRAL0LDvb1k2XmhDEJsMijudeuxxawJj26y3DvwUUUE1odPohFSCgN
+# XDgA6x3IQOdjaQ14kQ9ouzgSYSQE97AqssIj0Y0R4qezyzQz45vbbEtc4/zf0pVV
+# j2Wr4qMLL7EJZRicXQIDAQABo4IBXTCCAVkwCQYDVR0TBAIwADAOBgNVHQ8BAf8E
+# BAMCB4AwKwYDVR0fBCQwIjAgoB6gHIYaaHR0cDovL3N2LnN5bWNiLmNvbS9zdi5j
+# cmwwYQYDVR0gBFowWDBWBgZngQwBBAEwTDAjBggrBgEFBQcCARYXaHR0cHM6Ly9k
+# LnN5bWNiLmNvbS9jcHMwJQYIKwYBBQUHAgIwGQwXaHR0cHM6Ly9kLnN5bWNiLmNv
+# bS9ycGEwEwYDVR0lBAwwCgYIKwYBBQUHAwMwVwYIKwYBBQUHAQEESzBJMB8GCCsG
+# AQUFBzABhhNodHRwOi8vc3Yuc3ltY2QuY29tMCYGCCsGAQUFBzAChhpodHRwOi8v
+# c3Yuc3ltY2IuY29tL3N2LmNydDAfBgNVHSMEGDAWgBSWO1PweTOXr32D7y4rzMq3
+# hh5yZjAdBgNVHQ4EFgQUcc7yjRZ9e0F2NrW+slcRNE7DTiEwDQYJKoZIhvcNAQEL
+# BQADggEBAHnDUdVkBJGhswkBuXkXIloHPiVt880y+jya20yx6mphFARP7RIIl1wu
+# FS38q9n1Km2/Dc4alxYIvzjjgosZ24P86UY/b8FmUgLXYMSeGlRQFrtoRcxlCioW
+# O7gjOPDcmAv4j/fobrAybVYZMlN7cDN1GcOoZESylMoQMBUjSYIrDKqWoT3mIocF
+# 3OpfDP9H77sQLhxuu9XBYve1PzQ7nAAOnPrVMWwHE+B6c24U6FwPKlRhS862LKqF
+# qz6oOBjDMTHJX9L0/E3KcSlgbq8Bbih4bTHPk6FswzWDC9rq8dG5M8dlgic0Tpka
+# /G7UKV/c0ir+MOqDIzt8bCtdOXYwL1EwggVZMIIEQaADAgECAhA9eNf5dklgsmF9
+# 9PAeyoYqMA0GCSqGSIb3DQEBCwUAMIHKMQswCQYDVQQGEwJVUzEXMBUGA1UEChMO
+# VmVyaVNpZ24sIEluYy4xHzAdBgNVBAsTFlZlcmlTaWduIFRydXN0IE5ldHdvcmsx
+# OjA4BgNVBAsTMShjKSAyMDA2IFZlcmlTaWduLCBJbmMuIC0gRm9yIGF1dGhvcml6
+# ZWQgdXNlIG9ubHkxRTBDBgNVBAMTPFZlcmlTaWduIENsYXNzIDMgUHVibGljIFBy
+# aW1hcnkgQ2VydGlmaWNhdGlvbiBBdXRob3JpdHkgLSBHNTAeFw0xMzEyMTAwMDAw
+# MDBaFw0yMzEyMDkyMzU5NTlaMH8xCzAJBgNVBAYTAlVTMR0wGwYDVQQKExRTeW1h
+# bnRlYyBDb3Jwb3JhdGlvbjEfMB0GA1UECxMWU3ltYW50ZWMgVHJ1c3QgTmV0d29y
+# azEwMC4GA1UEAxMnU3ltYW50ZWMgQ2xhc3MgMyBTSEEyNTYgQ29kZSBTaWduaW5n
+# IENBMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAl4MeABavLLHSCMTX
+# aJNRYB5x9uJHtNtYTSNiarS/WhtR96MNGHdou9g2qy8hUNqe8+dfJ04LwpfICXCT
+# qdpcDU6kDZGgtOwUzpFyVC7Oo9tE6VIbP0E8ykrkqsDoOatTzCHQzM9/m+bCzFhq
+# ghXuPTbPHMWXBySO8Xu+MS09bty1mUKfS2GVXxxw7hd924vlYYl4x2gbrxF4Gpiu
+# xFVHU9mzMtahDkZAxZeSitFTp5lbhTVX0+qTYmEgCscwdyQRTWKDtrp7aIIx7mXK
+# 3/nVjbI13Iwrb2pyXGCEnPIMlF7AVlIASMzT+KV93i/XE+Q4qITVRrgThsIbnepa
+# ON2b2wIDAQABo4IBgzCCAX8wLwYIKwYBBQUHAQEEIzAhMB8GCCsGAQUFBzABhhNo
+# dHRwOi8vczIuc3ltY2IuY29tMBIGA1UdEwEB/wQIMAYBAf8CAQAwbAYDVR0gBGUw
+# YzBhBgtghkgBhvhFAQcXAzBSMCYGCCsGAQUFBwIBFhpodHRwOi8vd3d3LnN5bWF1
+# dGguY29tL2NwczAoBggrBgEFBQcCAjAcGhpodHRwOi8vd3d3LnN5bWF1dGguY29t
+# L3JwYTAwBgNVHR8EKTAnMCWgI6Ahhh9odHRwOi8vczEuc3ltY2IuY29tL3BjYTMt
+# ZzUuY3JsMB0GA1UdJQQWMBQGCCsGAQUFBwMCBggrBgEFBQcDAzAOBgNVHQ8BAf8E
+# BAMCAQYwKQYDVR0RBCIwIKQeMBwxGjAYBgNVBAMTEVN5bWFudGVjUEtJLTEtNTY3
+# MB0GA1UdDgQWBBSWO1PweTOXr32D7y4rzMq3hh5yZjAfBgNVHSMEGDAWgBR/02Wn
+# wt3su/AwCfNDOfoCrzMxMzANBgkqhkiG9w0BAQsFAAOCAQEAE4UaHmmpN/egvaSv
+# fh1hU/6djF4MpnUeeBcj3f3sGgNVOftxlcdlWqeOMNJEWmHbcG/aIQXCLnO6SfHR
+# k/5dyc1eA+CJnj90Htf3OIup1s+7NS8zWKiSVtHITTuC5nmEFvwosLFH8x2iPu6H
+# 2aZ/pFalP62ELinefLyoqqM9BAHqupOiDlAiKRdMh+Q6EV/WpCWJmwVrL7TJAUwn
+# ewusGQUioGAVP9rJ+01Mj/tyZ3f9J5THujUOiEn+jf0or0oSvQ2zlwXeRAwV+jYr
+# A9zBUAHxoRFdFOXivSdLVL4rhF4PpsN0BQrvl8OJIrEfd/O9zUPU8UypP7WLhK9k
+# 8tAUITGCEIYwghCCAgEBMIGTMH8xCzAJBgNVBAYTAlVTMR0wGwYDVQQKExRTeW1h
+# bnRlYyBDb3Jwb3JhdGlvbjEfMB0GA1UECxMWU3ltYW50ZWMgVHJ1c3QgTmV0d29y
+# azEwMC4GA1UEAxMnU3ltYW50ZWMgQ2xhc3MgMyBTSEEyNTYgQ29kZSBTaWduaW5n
+# IENBAhB333Q9blgqlN8VYTchtwybMA0GCWCGSAFlAwQCAQUAoIGUMBkGCSqGSIb3
+# DQEJAzEMBgorBgEEAYI3AgEEMBwGCisGAQQBgjcCAQsxDjAMBgorBgEEAYI3AgEV
+# MCgGCisGAQQBgjcCAQwxGjAYoRaAFGh0dHBzOi8vd3d3LnBkcS5jb20gMC8GCSqG
+# SIb3DQEJBDEiBCBZ09V3oxk0N7O2MuNForOxLzsFDAXJfmrFwku+bCdAUzANBgkq
+# hkiG9w0BAQEFAASCAQAHMFzpChY9KEE5+lH+3m8/DZLWFKXbYbat/mPWvwNhXLVd
+# RYWFToglWtFUsczgNGVzM2U7caNI04EUwxNEmN8sXeytTvD7PSAfkbb9G5Vm/HOi
+# w2SCvK3nTtriB8cn/dSHyfXnloYfoGCKMPmOED4lPUHAYMDTaKx2wUFdf1IRsO6v
+# KAc37t2C+k+ue1fUduY/aobxZ4WJcy4ntfmd5noQM05p6c2Uezd6lkkPNqW1BUBB
+# f7D41jOhfCYWYP8E1ixLk30MtABxNbHRMq/Ov1OCEJox9PBIxxR+ZYLzJgQoxoV1
+# 3oMJVIDqOgGMoC/566f5zs/XTyuwneV57J1r7VLSoYIOLDCCDigGCisGAQQBgjcD
+# AwExgg4YMIIOFAYJKoZIhvcNAQcCoIIOBTCCDgECAQMxDTALBglghkgBZQMEAgEw
+# gf8GCyqGSIb3DQEJEAEEoIHvBIHsMIHpAgEBBgtghkgBhvhFAQcXAzAhMAkGBSsO
+# AwIaBQAEFBEhzdrWz8bbOQ7wAkWsl3RXl9C0AhUAjPH6HFxFIEc8GwpxkRg0FtCs
+# VysYDzIwMTcxMTA5MDI0ODU5WjADAgEeoIGGpIGDMIGAMQswCQYDVQQGEwJVUzEd
+# MBsGA1UEChMUU3ltYW50ZWMgQ29ycG9yYXRpb24xHzAdBgNVBAsTFlN5bWFudGVj
+# IFRydXN0IE5ldHdvcmsxMTAvBgNVBAMTKFN5bWFudGVjIFNIQTI1NiBUaW1lU3Rh
+# bXBpbmcgU2lnbmVyIC0gRzKgggqLMIIFODCCBCCgAwIBAgIQewWx1EloUUT3yYnS
+# nBmdEjANBgkqhkiG9w0BAQsFADCBvTELMAkGA1UEBhMCVVMxFzAVBgNVBAoTDlZl
+# cmlTaWduLCBJbmMuMR8wHQYDVQQLExZWZXJpU2lnbiBUcnVzdCBOZXR3b3JrMTow
+# OAYDVQQLEzEoYykgMjAwOCBWZXJpU2lnbiwgSW5jLiAtIEZvciBhdXRob3JpemVk
+# IHVzZSBvbmx5MTgwNgYDVQQDEy9WZXJpU2lnbiBVbml2ZXJzYWwgUm9vdCBDZXJ0
+# aWZpY2F0aW9uIEF1dGhvcml0eTAeFw0xNjAxMTIwMDAwMDBaFw0zMTAxMTEyMzU5
+# NTlaMHcxCzAJBgNVBAYTAlVTMR0wGwYDVQQKExRTeW1hbnRlYyBDb3Jwb3JhdGlv
+# bjEfMB0GA1UECxMWU3ltYW50ZWMgVHJ1c3QgTmV0d29yazEoMCYGA1UEAxMfU3lt
+# YW50ZWMgU0hBMjU2IFRpbWVTdGFtcGluZyBDQTCCASIwDQYJKoZIhvcNAQEBBQAD
+# ggEPADCCAQoCggEBALtZnVlVT52Mcl0agaLrVfOwAa08cawyjwVrhponADKXak3J
+# ZBRLKbvC2Sm5Luxjs+HPPwtWkPhiG37rpgfi3n9ebUA41JEG50F8eRzLy60bv9iV
+# kfPw7mz4rZY5Ln/BJ7h4OcWEpe3tr4eOzo3HberSmLU6Hx45ncP0mqj0hOHE0Xxx
+# xgYptD/kgw0mw3sIPk35CrczSf/KO9T1sptL4YiZGvXA6TMU1t/HgNuR7v68kldy
+# d/TNqMz+CfWTN76ViGrF3PSxS9TO6AmRX7WEeTWKeKwZMo8jwTJBG1kOqT6xzPnW
+# K++32OTVHW0ROpL2k8mc40juu1MO1DaXhnjFoTcCAwEAAaOCAXcwggFzMA4GA1Ud
+# DwEB/wQEAwIBBjASBgNVHRMBAf8ECDAGAQH/AgEAMGYGA1UdIARfMF0wWwYLYIZI
+# AYb4RQEHFwMwTDAjBggrBgEFBQcCARYXaHR0cHM6Ly9kLnN5bWNiLmNvbS9jcHMw
+# JQYIKwYBBQUHAgIwGRoXaHR0cHM6Ly9kLnN5bWNiLmNvbS9ycGEwLgYIKwYBBQUH
+# AQEEIjAgMB4GCCsGAQUFBzABhhJodHRwOi8vcy5zeW1jZC5jb20wNgYDVR0fBC8w
+# LTAroCmgJ4YlaHR0cDovL3Muc3ltY2IuY29tL3VuaXZlcnNhbC1yb290LmNybDAT
+# BgNVHSUEDDAKBggrBgEFBQcDCDAoBgNVHREEITAfpB0wGzEZMBcGA1UEAxMQVGlt
+# ZVN0YW1wLTIwNDgtMzAdBgNVHQ4EFgQUr2PWyqNOhXLgp7xB8ymiOH+AdWIwHwYD
+# VR0jBBgwFoAUtnf6aUhHn1MS1cLqBzJ2B9GXBxkwDQYJKoZIhvcNAQELBQADggEB
+# AHXqsC3VNBlcMkX+DuHUT6Z4wW/X6t3cT/OhyIGI96ePFeZAKa3mXfSi2VZkhHEw
+# Kt0eYRdmIFYGmBmNXXHy+Je8Cf0ckUfJ4uiNA/vMkC/WCmxOM+zWtJPITJBjSDlA
+# IcTd1m6JmDy1mJfoqQa3CcmPU1dBkC/hHk1O3MoQeGxCbvC2xfhhXFL1TvZrjfdK
+# er7zzf0D19n2A6gP41P3CnXsxnUuqmaFBJm3+AZX4cYO9uiv2uybGB+queM6AL/O
+# ipTLAduexzi7D1Kr0eOUA2AKTaD+J20UMvw/l0Dhv5mJ2+Q5FL3a5NPD6itas5VY
+# VQR9x5rsIwONhSrS/66pYYEwggVLMIIEM6ADAgECAhBUWPKq10HWRLyEqXugllLm
+# MA0GCSqGSIb3DQEBCwUAMHcxCzAJBgNVBAYTAlVTMR0wGwYDVQQKExRTeW1hbnRl
+# YyBDb3Jwb3JhdGlvbjEfMB0GA1UECxMWU3ltYW50ZWMgVHJ1c3QgTmV0d29yazEo
+# MCYGA1UEAxMfU3ltYW50ZWMgU0hBMjU2IFRpbWVTdGFtcGluZyBDQTAeFw0xNzAx
+# MDIwMDAwMDBaFw0yODA0MDEyMzU5NTlaMIGAMQswCQYDVQQGEwJVUzEdMBsGA1UE
+# ChMUU3ltYW50ZWMgQ29ycG9yYXRpb24xHzAdBgNVBAsTFlN5bWFudGVjIFRydXN0
+# IE5ldHdvcmsxMTAvBgNVBAMTKFN5bWFudGVjIFNIQTI1NiBUaW1lU3RhbXBpbmcg
+# U2lnbmVyIC0gRzIwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCZ8/zY
+# BAkDhvnXXKaTwEJ86nxjz10A4o7zwJDfjyn1GOqUt5Ll17Cgc4Ho6QqbSnwB/52P
+# pDmnDupF9CIMOnDtOUWL5MUbXPBFaEYkBWN2mxz8nmwqsVblin9Sca7yNdVGIwYc
+# z0gtHbTNuNl2I44c/z6/uwZcaQemZQ74Xq59Lu1NrjXvydcAQv0olQ6fXXJCCbzD
+# 2kTS7cxHhOT8yi2sWL6u967ZRA0It8J31hpDcNFuA95SksQQCHHZuiJV8h+87Zud
+# O+JeHUyD/5cPewvnVYNO0g3rvtfsrm5HuZ/fpdZRvARV7f8ncEzJ7SpLE+GxuUwP
+# yQHuVWVfaQJ4Zss/AgMBAAGjggHHMIIBwzAMBgNVHRMBAf8EAjAAMGYGA1UdIARf
+# MF0wWwYLYIZIAYb4RQEHFwMwTDAjBggrBgEFBQcCARYXaHR0cHM6Ly9kLnN5bWNi
+# LmNvbS9jcHMwJQYIKwYBBQUHAgIwGRoXaHR0cHM6Ly9kLnN5bWNiLmNvbS9ycGEw
+# QAYDVR0fBDkwNzA1oDOgMYYvaHR0cDovL3RzLWNybC53cy5zeW1hbnRlYy5jb20v
+# c2hhMjU2LXRzcy1jYS5jcmwwFgYDVR0lAQH/BAwwCgYIKwYBBQUHAwgwDgYDVR0P
+# AQH/BAQDAgeAMHcGCCsGAQUFBwEBBGswaTAqBggrBgEFBQcwAYYeaHR0cDovL3Rz
+# LW9jc3Aud3Muc3ltYW50ZWMuY29tMDsGCCsGAQUFBzAChi9odHRwOi8vdHMtYWlh
+# LndzLnN5bWFudGVjLmNvbS9zaGEyNTYtdHNzLWNhLmNlcjAoBgNVHREEITAfpB0w
+# GzEZMBcGA1UEAxMQVGltZVN0YW1wLTIwNDgtNTAdBgNVHQ4EFgQUCbXB/pZylylD
+# msngArqu+P0vuvYwHwYDVR0jBBgwFoAUr2PWyqNOhXLgp7xB8ymiOH+AdWIwDQYJ
+# KoZIhvcNAQELBQADggEBABezCojpXFpeIGs7ChWybMWpijKH07H0HFOuhb4/m//X
+# vLeUhbTHUn6U6L3tYbLUp5nkw8mTwTU9C+hoCl1WmL2xIjvRRHrXv/BtUTKK1SPf
+# OAE39uJTK3orEY+3TWx6MwMbfGsJlBe75NtY1CETZefs0SXKLHWanH/8ybsqaKvE
+# fbTPo8lsp9nEAJyJCneR9E2i+zE7hm725h9QA4abv8tCq+Z2m3JaEQGKxu+lb5Xn
+# 3a665iJl8BhZGxHJzYC32JdHH0II+KxxH7BGU7PUstWjq1B1SBIXgq3P4EFPMn7N
+# lRy/kYoIPaSnZwKW3yRMpdBBwIJgo4oXMkvTvM+ktIwxggJaMIICVgIBATCBizB3
+# MQswCQYDVQQGEwJVUzEdMBsGA1UEChMUU3ltYW50ZWMgQ29ycG9yYXRpb24xHzAd
+# BgNVBAsTFlN5bWFudGVjIFRydXN0IE5ldHdvcmsxKDAmBgNVBAMTH1N5bWFudGVj
+# IFNIQTI1NiBUaW1lU3RhbXBpbmcgQ0ECEFRY8qrXQdZEvISpe6CWUuYwCwYJYIZI
+# AWUDBAIBoIGkMBoGCSqGSIb3DQEJAzENBgsqhkiG9w0BCRABBDAcBgkqhkiG9w0B
+# CQUxDxcNMTcxMTA5MDI0ODU5WjAvBgkqhkiG9w0BCQQxIgQgB7Yexx16nnkf1C9n
+# 5wq2BNhx3iZQ4TbUFqubEdvq0+0wNwYLKoZIhvcNAQkQAi8xKDAmMCQwIgQgz3rB
+# etBH7NX9w2giAxsS1O8Hi28rTF5rpB+P8s9LrWcwCwYJKoZIhvcNAQEBBIIBAGoJ
+# sOpA04MwwZhhPIUo9Co/s1YfxkBBL+Vuxc0fdfZE3JF98Y7jP+dpd2jHbg8yzFEt
+# tSws0NlM1UXW+UR7JCAHC4kZgNYDAldbDrR2uwKBSf/BhYg1u4CltdjqVuAMttoy
+# +HN/Wnng7RWkxmF/+PAkM4hBUYg906tQfV/Tt1B9hjKzymP0ptE7hBvKL30ZE9K1
+# GmeE/hkbUu47MSOgfhwycvrQaF9WFgUAgyprYhMNsRRBRPy54YOOSvdCWNS9agdv
+# ZeKv65Y88e0K0a29T6eKzm1eVuLlN+CREd5Lap3r1pKoMB2ECR482wT+MuouMUyQ
+# Hcx2hJGq6w5LMHE+Ijg=
+# SIG # End signature block
