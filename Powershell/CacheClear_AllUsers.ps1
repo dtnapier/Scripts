@@ -1,22 +1,5 @@
 Write-Host -ForegroundColor yellow "#######################################################"
 ""
-Write-Host -ForegroundColor Green "Powershell commands to delete cache & cookies in Firefox, Chrome & IE browsers"
-Write-Host -ForegroundColor Green "By Lee Bhogal, Paradise Computing Ltd - June 2014"
-Write-Host -ForegroundColor Green "Modified by Tyler Napier - Sept 2020"
-Write-Host -ForegroundColor Green "VERSION: 3"
-""
-Write-Host -ForegroundColor yellow "#######################################################"
-""
-Write-Host -ForegroundColor Green "CHANGE_LOG:
-v2.4: - Resolved *.default issue, issue was with the file path name not with *.default, but issue resolved
-v2.3: - Added Cache2 to Mozilla directories but found that *.default is not working
-v2.2: - Added Cyan colour to verbose output
-v2.1: - Added the location 'C:\Windows\Temp\*' and 'C:\`$recycle.bin\'
-v2:   - Changed the retrieval of user list to dir the c:\users folder and export to csv
-v1:   - Compiled script"
-""
-Write-Host -ForegroundColor yellow "#######################################################"
-""
 #########################
 "-------------------"
 Write-Host -ForegroundColor Green "SECTION 1: Getting the list of users"
@@ -44,9 +27,12 @@ Remove-Item -path "C:\`$recycle.bin\" -Recurse -Force -EA SilentlyContinue -Verb
 
 #Temp files with time delay
 Get-ChildItem -path "C:\Temp\*" -Recurse -EA SilentlyContinue | Where-Object {($_.LastWriteTime -lt (Get-Date).AddDays(-30))} | Remove-Item -Recurse -Force -EA SilentlyContinue -Verbose
+Get-ChildItem -path "C:\Windows\ServiceProfiles\LocalService\AppData\Local\~FontCache*" -Recurse -EA SilentlyContinue | Where-Object {($_.LastWriteTime -lt (Get-Date).AddDays(-7))} | Remove-Item -Recurse -Force -EA SilentlyContinue -Verbose
+Get-ChildItem -path "C:\Windows\ServiceProfiles\LocalService\AppData\Local\FontCache*" -Recurse -EA SilentlyContinue | Where-Object {($_.LastWriteTime -lt (Get-Date).AddDays(-7))} | Remove-Item -Recurse -Force -EA SilentlyContinue -Verbose
 
 #Parallels logs - 6 months delayed
 Get-ChildItem -path "C:\ProgramData\Parallels\RASLogs\univprn_*.log" -EA SilentlyContinue | Where-Object {($_.LastWriteTime -lt (Get-Date).AddDays(-180))} | Remove-Item -Force -EA SilentlyContinue -Verbose
+
 
 if ($list) {
 <#
@@ -82,6 +68,10 @@ if ($list) {
         Remove-Item -path "C:\Users\$($_.Name)\AppData\Local\Google\Chrome\User Data\Default\Media Cache" -Recurse -Force -EA SilentlyContinue -Verbose
         Remove-Item -path "C:\Users\$($_.Name)\AppData\Local\Google\Chrome\User Data\Default\Cookies-Journal" -Recurse -Force -EA SilentlyContinue -Verbose
         Remove-Item -path "C:\Users\$($_.Name)\AppData\Local\Google\Chrome\User Data\Default\Service Worker\*" -Recurse -Force -EA SilentlyContinue -Verbose
+        Remove-Item -path "C:\Users\$($_.Name)\AppData\Local\Google\Chrome\User Data\Default\Code Cache\*" -Recurse -Force -EA SilentlyContinue -Verbose
+        Remove-Item -path "C:\Users\$($_.Name)\AppData\Local\Google\Chrome\User Data\PepperFlash" -Recurse -Force -EA SilentlyContinue -Verbose
+        Remove-Item -path "C:\Users\$($_.Name)\AppData\Local\Google\Chrome\User Data\SwReporter" -Recurse -Force -EA SilentlyContinue -Verbose
+
         # Remove-Item -path "C:\Users\$($_.Name)\AppData\Local\Google\Chrome\User Data\Default\ChromeDWriteFontCache" -Recurse -Force -EA SilentlyContinue -Verbose
             }
 
@@ -93,7 +83,7 @@ if ($list) {
      "-------------------"
     Write-Host -ForegroundColor yellow "Clearing other caches and folders"
     Write-Host -ForegroundColor cyan
-    Import-CSV -Path C:\users\$env:USERNAME\users.csv | foreach {
+    Import-CSV -Path C:\users\$env:USERNAME\users.csv | foreach { 
 
         #Defunct folders and programs
         Remove-Item -path "C:\Users\$($_.Name)\AppData\Local\Microsoft\Teams" -Recurse -Force -EA SilentlyContinue -Verbose
@@ -104,7 +94,10 @@ if ($list) {
         Remove-Item -path "C:\Users\$($_.Name)\AppData\Local\Webex" -Recurse -Force -EA SilentlyContinue -Verbose
         Remove-Item -path "C:\Users\$($_.Name)\AppData\Local\Microsoft\Windows Mail" -Recurse -Force -EA SilentlyContinue -Verbose
         Remove-Item -path "C:\Users\$($_.Name)\AppData\Local\Microsoft\Windows Media" -Recurse -Force -EA SilentlyContinue -Verbose
-
+        Remove-Item -path "C:\Users\$($_.Name)\AppData\Local\Microsoft\Edge" -Recurse -Force -EA SilentlyContinue -Verbose
+        Remove-Item -path "C:\Users\$($_.Name)\AppData\Local\eght-meet-electron" -Recurse -Force -EA SilentlyContinue -Verbose
+        Remove-Item -path "C:\Users\$($_.Name)\AppData\Local\GoToMeeting" -Recurse -Force -EA SilentlyContinue -Verbose
+       
         #Temp files
         Remove-Item -path "C:\Users\$($_.Name)\AppData\Local\Microsoft\Windows\Temporary Internet Files\*" -Recurse -Force -EA SilentlyContinue -Verbose
         Remove-Item -path "C:\Users\$($_.Name)\AppData\Local\Microsoft\Windows\WebCache\*" -Recurse -Force -EA SilentlyContinue -Verbose
@@ -115,7 +108,9 @@ if ($list) {
         Get-ChildItem -path "C:\Users\$($_.Name)\AppData\Local\Microsoft\Internet Explorer\Recovery\*" -Recurse -EA SilentlyContinue | Where-Object {($_.LastWriteTime -lt (Get-Date).AddDays(-1))} | Remove-Item -Recurse -Force -EA SilentlyContinue -Verbose
 	    Get-ChildItem -path "C:\Users\$($_.Name)\AppData\Local\Microsoft\Terminal Server Client\Cache\*" -Recurse -EA SilentlyContinue | Where-Object {($_.LastWriteTime -lt (Get-Date).AddDays(-2))} | Remove-Item -Recurse -Force -EA SilentlyContinue -Verbose
         Get-ChildItem -path "C:\Users\$($_.Name)\AppData\Local\Microsoft\Internet Explorer\Indexed DB\*" -Recurse -EA SilentlyContinue | Where-Object {($_.LastWriteTime -lt (Get-Date).AddDays(-1))} | Remove-Item -Recurse -Force -EA SilentlyContinue -Verbose        
-               
+        Get-ChildItem -path "C:\Users\$($_.Name)\AppData\Local\\Microsoft\Windows\INetCache\*" -Recurse -EA SilentlyContinue | Where-Object {($_.LastWriteTime -lt (Get-Date).AddDays(-1))} | Remove-Item -Recurse -Force -EA SilentlyContinue -Verbose
+        Get-ChildItem -path "C:\Users\$($_.Name)\AppData\LocalLow\Microsoft\CryptnetUrlCache\*" -Recurse -EA SilentlyContinue | Where-Object {($_.LastWriteTime -lt (Get-Date).AddDays(-7))} | Remove-Item -Recurse -Force -EA SilentlyContinue -Verbose
+                      
         #Downloads older than 5 days
         Get-ChildItem "C:\Users\$($_.Name)\Downloads\*" -Recurse -EA SilentlyContinue | Where-Object {($_.LastWriteTime -lt (Get-Date).AddDays(-5))} | Remove-Item -Recurse -Force -EA SilentlyContinue -Verbose
             
