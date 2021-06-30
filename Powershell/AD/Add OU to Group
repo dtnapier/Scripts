@@ -1,0 +1,7 @@
+Get-ADuser -Identity aduser | ft Name, DistinguishedName -Autosize
+
+Get-ADUser -SearchBase ‘CN=Users,DC=ingham,DC=com’ -Filter * | 
+ForEach-Object {Add-ADGroupMember -Identity ‘Ingham Users’ -Members $_ -WhatIf}
+
+Get-ADUser -SearchBase ‘CN=Users,DC=ingham,DC=com’ -Filter * | 
+ForEach-Object {Add-ADGroupMember -Identity ‘Ingham Users’ -Members $_}
